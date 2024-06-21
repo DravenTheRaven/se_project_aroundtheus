@@ -1,4 +1,25 @@
 .header {
   border-bottom: 1px #545454 solid;
   padding-top: 45px;
+  padding-bottom: 45px;
+}
+
+@media (max-width: 925px) {
+  .header__logo {
+    margin-left: 15px;
+  }
+}
+
+@media (max-width: 750px) {
+  .header__logo {
+    margin-left: 25px;
+  }
+}
+
+@media (max-width: 320px) {
+  .header__logo {
+    margin-left: 27px;
+    width: 126px;
+    height: 24px;
+  }
 }
