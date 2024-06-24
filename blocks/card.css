@@ -1,31 +1,25 @@
-.cards {
-  margin-top: 50px;
-
-  display: grid;
-  grid-template-columns: repeat(auto-fill, 282px);
-  gap: 15px;
-  justify-content: center;
-}
-
 .card {
-  max-height: 361px;
+  min-height: 361px;
   max-width: 282px;
+  border-radius: 10px;
+  overflow: hidden;
 }
 
 .card__image {
   height: 282px;
   width: 282px;
-  border-radius: 10px 10px 0 0;
 }
 
 .card__info {
   background-color: #fff;
   display: flex;
-  border-radius: 0 0 10px 10px;
 }
 
 .card__text {
-  font-family: "Inter";
+  margin: 0;
+  padding-top: 25px;
+  padding-bottom: 25px;
+  font-family: "Inter", Arial, sans-serif;
   font-weight: 900;
   line-height: 29px;
   font-size: 24px;
@@ -47,6 +41,6 @@
 }
 
 .card__button:hover {
-  background: url(../images/heart-hover.svg) no-repeat center transparent;
+  opacity: 0.5;
   cursor: pointer;
 }
