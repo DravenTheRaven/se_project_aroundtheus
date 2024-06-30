@@ -1,8 +1,14 @@
 .cards {
   margin-top: 36px;
-
+  margin-bottom: 70px;
   display: grid;
   grid-template-columns: repeat(auto-fill, 282px);
   gap: 15px;
   justify-content: center;
+}
+
+@media (max-width: 320px) {
+  .cards {
+    margin-bottom: 50px;
+  }
 }

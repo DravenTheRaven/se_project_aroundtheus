@@ -32,6 +32,10 @@
   font-size: 42px;
   line-height: 48px;
   grid-area: title;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  max-width: 415px;
 }
 
 .profile__subtitle {
@@ -42,6 +46,10 @@
   font-size: 18px;
   line-height: 22px;
   grid-area: description;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  max-width: 415px;
 }
 
 .profile__button {
@@ -63,7 +71,7 @@
   background: url(../images/edit-button.svg) no-repeat center;
   border: 1px solid #fff;
   grid-area: button;
-  align-self: center;
+  place-self: center;
 }
 
 .profile__edit-button:hover {

@@ -1,5 +1,4 @@
 .footer {
-  margin-top: 48px;
   padding-bottom: 60px;
 }
 
@@ -13,11 +12,13 @@
 }
 
 @media (max-width: 320px) {
+  .footer {
+    padding-bottom: 35px;
+  }
+
   .footer__copyright {
     font-size: 14px;
     line-height: 17px;
-    margin-top: 48px;
     margin-left: 19px;
-    padding-bottom: 25px;
   }
 }
