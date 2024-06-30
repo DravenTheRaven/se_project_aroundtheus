@@ -50,6 +50,7 @@
   white-space: nowrap;
   overflow: hidden;
   max-width: 415px;
+  margin-right: 20px;
 }
 
 .profile__button {
@@ -72,6 +73,7 @@
   border: 1px solid #fff;
   grid-area: button;
   place-self: center;
+  justify-self: end;
 }
 
 .profile__edit-button:hover {
@@ -154,6 +156,6 @@
     width: 18px;
     margin-bottom: 14px;
     margin-right: 20px;
-    margin-left: 10px;
+    margin-left: 5px;
   }
 }
