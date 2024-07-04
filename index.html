@@ -6,6 +6,7 @@
     <meta name="author" content="Draven Brew" />
     <meta name="description" content="Around the US" />
     <meta name="keywords" content="United States, Travel, Landmarks" />
+    <link rel="shortcut icon" href="./favicon.ico" />
     <link rel="stylesheet" href="./pages/index.css" />
     <title>Around the US</title>
   </head>
@@ -90,6 +91,31 @@
               <h2 class="card__text">Lago di Braies</h2>
               <button type="button" class="card__button"></button>
             </div>
+          </div>
+        </section>
+        <section class="modal">
+          <div class="modal__container">
+            <form class="form">
+              <fieldset class="form__fieldset">
+                <legend class="form__title">Edit Profile</legend>
+                <input
+                  type="text"
+                  placeholder="Name"
+                  class="form__input"
+                  id="name"
+                  required
+                />
+                <input
+                  type="text"
+                  placeholder="Description"
+                  class="form__input"
+                  id="description"
+                  required
+                />
+              </fieldset>
+              <button type="submit" class="form__button">Save</button>
+            </form>
+            <button type="button" class="modal__close_button"></button>
           </div>
         </section>
       </main>
