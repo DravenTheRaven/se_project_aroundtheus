@@ -20,7 +20,7 @@
   border-radius: 10px;
 }
 
-.modal__close_button {
+.modal__close-button {
   height: 45px;
   width: 45px;
   background: url("../images/close-icon.svg") no-repeat center;
