@@ -25,46 +25,54 @@ const initialCards = [
   },
 ];
 
-let template = document.querySelector("#card__template");
-let cardContainer = document.querySelector(".cards");
-let editButton = document.querySelector(".profile__edit-button");
-let closeButton = document.querySelector(".modal__close-button");
-let modal = document.querySelector(".modal");
-let formName = document.querySelector(".profile__title");
-let formDescription = document.querySelector(".profile__subtitle");
-let formButton = document.querySelector(".form__button");
-let newFormName = document.querySelector(".form__name");
-let newFormDescription = document.querySelector(".form__description");
+const template = document.querySelector("#card__template");
+const cardContainer = document.querySelector(".cards");
+const editButton = document.querySelector(".profile__edit-button");
+const closeButton = document.querySelector(".modal__close-button");
+const modal = document.querySelector(".modal");
+const formName = document.querySelector(".profile__title");
+const formDescription = document.querySelector(".profile__subtitle");
+const form = document.querySelector(".form");
+const newFormName = document.querySelector(".form__name");
+const newFormDescription = document.querySelector(".form__description");
+
+function toggleProfileModal() {
+  modal.classList.toggle("modal_opened");
+}
 
 function openModalDisplay(event) {
   newFormDescription.value = `${formDescription.textContent}`;
   newFormName.value = `${formName.textContent}`;
-  modal.classList.toggle("modal_opened");
+  toggleProfileModal();
 }
 
 function closeModalDisplay(event) {
-  modal.classList.toggle("modal_opened");
+  toggleProfileModal();
 }
 
 function changeProfileInfo(event) {
   formName.textContent = `${newFormName.value}`;
   formDescription.textContent = `${newFormDescription.value}`;
-  modal.classList.toggle("modal_opened");
+  toggleProfileModal();
   event.preventDefault();
 }
 
 editButton.addEventListener("click", openModalDisplay);
 closeButton.addEventListener("click", closeModalDisplay);
-formButton.addEventListener("click", changeProfileInfo);
+form.addEventListener("submit", changeProfileInfo);
 
-function getCardElement(data) {
+function createCard(cardData) {
+  const templateClone = template.content.cloneNode(true);
+  templateClone.querySelector(".card__image").src = cardData.link;
+  templateClone.querySelector(".card__image").alt = cardData.name;
+  templateClone.querySelector(".card__text").textContent = cardData.name;
+  return templateClone;
+}
+
+function renderCard(data) {
   for (let x of data) {
-    let templateClone = template.content.cloneNode(true);
-    templateClone.querySelector(".card__image").src = x.link;
-    templateClone.querySelector(".card__image").alt = x.name;
-    templateClone.querySelector(".card__text").textContent = x.name;
-    cardContainer.append(templateClone);
+    cardContainer.append(createCard(x));
   }
 }
 
-getCardElement(initialCards);
+renderCard(initialCards);
