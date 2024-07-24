@@ -5,11 +5,19 @@
   transform: translate(-50%, -50%);
   padding: 100%;
   background-color: rgba(0, 0, 0, 0.5);
-  display: none;
+  visibility: hidden;
+  opacity: 0;
+  transition: visibility 0s, opacity 0.5s linear;
+}
+
+.modal__image {
+  max-height: 75vh;
+  max-width: 75vw;
 }
 
 .modal_opened {
-  display: block;
+  visibility: visible;
+  opacity: 1;
 }
 
 .modal__container {
@@ -20,6 +28,11 @@
   border-radius: 10px;
 }
 
+.modal__image__wrapper {
+  display: flex;
+  flex-direction: column;
+}
+
 .modal__close-button {
   height: 45px;
   width: 45px;
@@ -28,6 +41,20 @@
   position: absolute;
   top: -45px;
   right: -45px;
+}
+
+.modal-image__close-button {
+  position: static;
+  margin-left: auto;
+  margin-right: -45px;
+}
+
+.modal-image__text {
+  font-family: "Inter";
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 14.5px;
+  color: white;
 }
 
 @media (max-width: 550px) {
