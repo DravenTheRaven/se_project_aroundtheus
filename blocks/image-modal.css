@@ -1,0 +1,22 @@
+.image-modal__close-button {
+  position: static;
+  margin-left: auto;
+  margin-right: -45px;
+}
+
+.image-modal__text {
+  font-family: "Inter";
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 14.5px;
+  color: white;
+}
+.image-modal__wrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+.image-modal__image {
+  max-height: 75vh;
+  max-width: 75vw;
+}

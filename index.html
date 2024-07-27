@@ -56,10 +56,7 @@
               </fieldset>
               <button type="submit" class="form__button">Save</button>
             </form>
-            <button
-              type="button"
-              class="modal__close-button edit-modal__close-button"
-            ></button>
+            <button type="button" class="modal__close-button"></button>
           </div>
         </section>
         <section class="modal add-modal">
@@ -70,7 +67,7 @@
                 <input
                   type="text"
                   placeholder="Title"
-                  class="form__input form__title"
+                  class="form__input form__location-title"
                   id="title"
                   required
                 />
@@ -82,22 +79,19 @@
                   required
                 />
               </fieldset>
-              <button type="submit" class="form__button">Save</button>
+              <button type="submit" class="form__button">Create</button>
             </form>
-            <button
-              type="button"
-              class="modal__close-button add-modal__close-button"
-            ></button>
+            <button type="button" class="modal__close-button"></button>
           </div>
         </section>
         <section class="modal image-modal">
-          <div class="modal__image__wrapper">
+          <div class="image-modal__wrapper">
             <button
               type="button"
-              class="modal__close-button modal-image__close-button"
+              class="modal__close-button image-modal__close-button"
             ></button>
-            <img class="modal__image" src="" alt="" />
-            <h3 class="modal-image__text"></h3>
+            <img class="image-modal__image" src="" alt="" />
+            <h3 class="image-modal__text"></h3>
           </div>
         </section>
       </main>
