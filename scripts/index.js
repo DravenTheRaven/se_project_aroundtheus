@@ -28,7 +28,6 @@ const initialCards = [
 const template = document.querySelector("#card__template");
 const cardContainer = document.querySelector(".cards");
 const editButton = document.querySelector(".profile__edit-button");
-
 const addButton = document.querySelector(".profile__button");
 const imageModal = document.querySelector(".image-modal");
 const profileFormName = document.querySelector(".profile__title");
@@ -117,6 +116,10 @@ function createCard(cardData) {
 
 function renderCards(data) {
   data.forEach((element) => cardContainer.append(createCard(element)));
+}
+
+function showInputError(formElement, inputElement, errorMessage) {
+  const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
 }
 
 renderCards(initialCards);

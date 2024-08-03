@@ -43,16 +43,22 @@
                   type="text"
                   placeholder="Name"
                   class="form__input form__name"
-                  id="name"
+                  id="name-input"
+                  minlength="2"
+                  maxlength="40"
                   required
                 />
+                <span class="form__input-error name-input-error"></span>
                 <input
                   type="text"
                   placeholder="Description"
                   class="form__input form__description"
-                  id="description"
+                  id="description-input"
+                  minlength="2"
+                  maxlength="200"
                   required
                 />
+                <span class="form__input-error desription-input-error"></span>
               </fieldset>
               <button type="submit" class="form__button">Save</button>
             </form>
