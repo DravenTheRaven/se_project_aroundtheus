@@ -53,12 +53,13 @@ function enableValidation() {
   formList.forEach((formElement) => {
     setEventListeners(formElement);
   });
-  editButton.addEventListener("click", openProfileModal);
-  addButton.addEventListener("click", openAddModal);
-  editForm.addEventListener("submit", changeProfileInfo);
-  addForm.addEventListener("submit", addLocationCard);
-  closeButtons.forEach((button) => {
-    const modal = button.closest(".modal");
-    button.addEventListener("click", () => openAndCloseModal(modal));
-  });
 }
+
+enableValidation({
+  formSelector: ".popup__form",
+  inputSelector: ".popup__input",
+  submitButtonSelector: ".popup__button",
+  inactiveButtonClass: "popup__button_disabled",
+  inputErrorClass: "popup__input_type_error",
+  errorClass: "popup__error_visible",
+});
