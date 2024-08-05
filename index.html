@@ -48,7 +48,7 @@
                   maxlength="40"
                   required
                 />
-                <span class="form__input-error name-input-error"></span>
+                <span class="form__input-error-message name-input-error"></span>
                 <input
                   type="text"
                   placeholder="Description"
@@ -58,7 +58,9 @@
                   maxlength="200"
                   required
                 />
-                <span class="form__input-error desription-input-error"></span>
+                <span
+                  class="form__input-error-message description-input-error"
+                ></span>
               </fieldset>
               <button type="submit" class="form__button">Save</button>
             </form>
@@ -75,15 +77,19 @@
                   placeholder="Title"
                   class="form__input form__location-title"
                   id="title"
+                  minlength="1"
+                  maxlength="30"
                   required
                 />
+                <span class="form__input-error-message title-error"></span>
                 <input
-                  type="text"
                   placeholder="Image URL"
                   class="form__input form__image-url"
                   id="image-url"
+                  type="url"
                   required
                 />
+                <span class="form__input-error-message image-url-error"></span>
               </fieldset>
               <button type="submit" class="form__button">Create</button>
             </form>
@@ -116,5 +122,6 @@
       </div>
     </template>
     <script src="scripts/index.js"></script>
+    <script src="scripts/validate.js"></script>
   </body>
 </html>

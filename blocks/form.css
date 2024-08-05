@@ -28,6 +28,10 @@
   line-height: 17px;
 }
 
+.form__input_error {
+  border-bottom: 1px solid red;
+}
+
 .form__button {
   width: 358px;
   height: 50px;
@@ -41,6 +45,20 @@
   background-color: black;
   border: none;
   border-radius: 2px;
+}
+
+.form__button-disabled {
+  background-color: rgb(0, 0, 0, 0.8);
+}
+
+.form__input-error-message {
+  font-family: "Inter";
+  font-size: 12px;
+  font-weight: 400;
+
+  color: #ff0000;
+  position: relative;
+  top: -25px;
 }
 
 @media (max-width: 550px) {
