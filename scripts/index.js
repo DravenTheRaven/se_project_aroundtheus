@@ -40,6 +40,8 @@ const editModal = document.querySelector(".edit-modal");
 const addModal = document.querySelector(".add-modal");
 const closeButtons = document.querySelectorAll(".modal__close-button");
 const modalList = Array.from(document.querySelectorAll(".modal"));
+const locationTitleInput = document.querySelector("#title");
+const locationURLInput = document.querySelector(".form__image-url");
 
 function openAndCloseModal(modal) {
   modal.classList.toggle("modal_opened");
@@ -52,8 +54,8 @@ function openProfileModal(event) {
 }
 
 function openAddModal() {
-  document.querySelector("#title").value = "";
-  document.querySelector(".form__image-url").value = "";
+  locationTitleInput.value = "";
+  locationURLInput.value = "";
   openAndCloseModal(addModal);
 }
 
@@ -65,8 +67,8 @@ function changeProfileInfo(event) {
 }
 
 function addLocationCard(event) {
-  const newLocationTitle = document.querySelector("#title").value;
-  const newLocationImage = document.querySelector(".form__image-url").value;
+  const newLocationTitle = locationTitleInput.value;
+  const newLocationImage = locationURLInput.value;
   const newLocation = { name: newLocationTitle, link: newLocationImage };
   cardContainer.prepend(createCard(newLocation));
   openAndCloseModal(addModal);
@@ -82,8 +84,9 @@ function deleteCard(event) {
 }
 
 function openImageModel(event) {
-  imageModal.querySelector(".image-modal__image").src = event.target.src;
-  imageModal.querySelector(".image-modal__image").alt = event.target.alt;
+  const imageModalImage = imageModal.querySelector(".image-modal__image");
+  imageModalImage.src = event.target.src;
+  imageModalImage.alt = event.target.alt;
   imageModal.querySelector(".image-modal__text").textContent = event.target.alt;
   openAndCloseModal(imageModal);
 }
@@ -100,9 +103,7 @@ function createCard(cardData) {
   templateClone
     .querySelector(".card__delete-button")
     .addEventListener("click", deleteCard);
-  templateClone
-    .querySelector(".card__image")
-    .addEventListener("click", openImageModel);
+  cardImage.addEventListener("click", openImageModel);
   return templateClone;
 }
 
