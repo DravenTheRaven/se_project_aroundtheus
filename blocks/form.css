@@ -101,3 +101,21 @@
     line-height: 17px;
   }
 }
+
+@media (max-width: 320px) {
+  .form__title-error {
+    top: 155px;
+  }
+
+  .form__name-input-error {
+    top: 155px;
+  }
+
+  .form__description-input-error {
+    top: 205px;
+  }
+
+  .form__image-url-error {
+    top: 205px;
+  }
+}
