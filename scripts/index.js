@@ -40,29 +40,40 @@ const editModal = document.querySelector(".edit-modal");
 const addModal = document.querySelector(".add-modal");
 const closeButtons = document.querySelectorAll(".modal__close-button");
 const modalList = Array.from(document.querySelectorAll(".modal"));
-const locationTitleInput = document.querySelector("#title");
+const locationTitleInput = document.querySelector(".form__location-title");
 const locationURLInput = document.querySelector(".form__image-url");
 
 function openAndCloseModal(modal) {
   modal.classList.toggle("modal_opened");
+  addEscapeListener();
+}
+
+function openModal(modal) {
+  modal.classList.add("modal_opened");
+  addEscapeListener();
+}
+
+function closeModal(modal) {
+  modal.classList.remove("modal_opened");
+  removeEscapeListener();
 }
 
 function openProfileModal(event) {
   newProfileFormDescription.value = `${profileFormDescription.textContent}`;
   newProfileFormName.value = `${profileFormName.textContent}`;
-  openAndCloseModal(editModal);
+  openModal(editModal);
 }
 
 function openAddModal() {
   locationTitleInput.value = "";
   locationURLInput.value = "";
-  openAndCloseModal(addModal);
+  openModal(addModal);
 }
 
 function changeProfileInfo(event) {
   profileFormName.textContent = `${newProfileFormName.value}`;
   profileFormDescription.textContent = `${newProfileFormDescription.value}`;
-  openAndCloseModal(editModal);
+  closeModal(editModal);
   event.preventDefault();
 }
 
@@ -71,7 +82,7 @@ function addLocationCard(event) {
   const newLocationImage = locationURLInput.value;
   const newLocation = { name: newLocationTitle, link: newLocationImage };
   cardContainer.prepend(createCard(newLocation));
-  openAndCloseModal(addModal);
+  closeModal(addModal);
   event.preventDefault();
 }
 
@@ -88,7 +99,7 @@ function openImageModel(event) {
   imageModalImage.src = event.target.src;
   imageModalImage.alt = event.target.alt;
   imageModal.querySelector(".image-modal__text").textContent = event.target.alt;
-  openAndCloseModal(imageModal);
+  openModal(imageModal);
 }
 
 function createCard(cardData) {
@@ -119,24 +130,32 @@ editForm.addEventListener("submit", changeProfileInfo);
 addForm.addEventListener("submit", addLocationCard);
 closeButtons.forEach((button) => {
   const modal = button.closest(".modal");
-  button.addEventListener("click", () => openAndCloseModal(modal));
+  button.addEventListener("click", () => closeModal(modal));
 });
 
-document.addEventListener("keydown", function (event) {
+function addEscapeListener() {
+  document.addEventListener("keydown", escapeClose);
+}
+
+function removeEscapeListener() {
+  document.removeEventListener("keydown", escapeClose);
+}
+
+function escapeClose(event) {
   if (event.key === "Escape") {
     modalList.forEach((modalElement) => {
       if (modalElement.classList.contains("modal_opened")) {
-        modalElement.classList.remove("modal_opened");
+        closeModal(modalElement);
       }
     });
   }
-});
+}
 
 modalList.forEach((modalElement) => {
   modalElement.addEventListener("click", function (event) {
     console.log(event);
     if (event.target.classList.contains("modal")) {
-      modalElement.classList.remove("modal_opened");
+      closeModal(modalElement);
     }
   });
 });

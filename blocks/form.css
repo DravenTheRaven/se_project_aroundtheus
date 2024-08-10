@@ -52,13 +52,29 @@
 }
 
 .form__input-error-message {
+  min-height: 12px;
   font-family: "Inter";
   font-size: 12px;
   font-weight: 400;
 
   color: #ff0000;
-  position: relative;
-  top: -25px;
+  position: absolute;
+}
+
+.form__title-error {
+  top: 140px;
+}
+
+.form__name-input-error {
+  top: 140px;
+}
+
+.form__description-input-error {
+  top: 190px;
+}
+
+.form__image-url-error {
+  top: 190px;
 }
 
 @media (max-width: 550px) {
