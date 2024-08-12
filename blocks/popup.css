@@ -1,4 +1,4 @@
-.modal {
+.popup {
   position: fixed;
   top: 50%;
   left: 50%;
@@ -10,13 +10,13 @@
   transition: visibility 0s, opacity 0.5s linear;
 }
 
-.modal_opened {
+.popup_opened {
   visibility: visible;
   opacity: 1;
   z-index: 1;
 }
 
-.modal__container {
+.popup__container {
   position: relative;
   width: 430px;
   height: 330px;
@@ -24,7 +24,7 @@
   border-radius: 10px;
 }
 
-.modal__close-button {
+.popup__close-button {
   height: 45px;
   width: 45px;
   background: url("../images/close-icon.svg") no-repeat center;
@@ -35,19 +35,19 @@
 }
 
 @media (max-width: 550px) {
-  .modal__container {
+  .popup__container {
     width: 282px;
     height: 322px;
   }
 
-  .modal__close_button {
+  .popup__close_button {
     top: -75px;
     right: 0;
   }
 }
 
 @media (max-width: 320px) {
-  .modal__close-button {
+  .popup__close-button {
     top: -60px;
     right: 5px;
   }

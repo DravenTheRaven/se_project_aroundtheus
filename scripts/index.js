@@ -29,51 +29,51 @@ const template = document.querySelector("#card__template");
 const cardContainer = document.querySelector(".cards");
 const editButton = document.querySelector(".profile__edit-button");
 const addButton = document.querySelector(".profile__button");
-const imageModal = document.querySelector(".image-modal");
+const imagepopup = document.querySelector(".image-popup");
 const profileFormName = document.querySelector(".profile__title");
 const profileFormDescription = document.querySelector(".profile__subtitle");
 const editForm = document.querySelector(".edit-form");
 const addForm = document.querySelector(".add-form");
 const newProfileFormName = document.querySelector(".form__name");
 const newProfileFormDescription = document.querySelector(".form__description");
-const editModal = document.querySelector(".edit-modal");
-const addModal = document.querySelector(".add-modal");
-const closeButtons = document.querySelectorAll(".modal__close-button");
-const modalList = Array.from(document.querySelectorAll(".modal"));
+const editpopup = document.querySelector(".edit-popup");
+const addpopup = document.querySelector(".add-popup");
+const closeButtons = document.querySelectorAll(".popup__close-button");
+const popupList = Array.from(document.querySelectorAll(".popup"));
 const locationTitleInput = document.querySelector(".form__location-title");
 const locationURLInput = document.querySelector(".form__image-url");
 
-function openAndCloseModal(modal) {
-  modal.classList.toggle("modal_opened");
+function openAndClosepopup(popup) {
+  popup.classList.toggle("popup_opened");
   addEscapeListener();
 }
 
-function openModal(modal) {
-  modal.classList.add("modal_opened");
+function openpopup(popup) {
+  popup.classList.add("popup_opened");
   addEscapeListener();
 }
 
-function closeModal(modal) {
-  modal.classList.remove("modal_opened");
+function closepopup(popup) {
+  popup.classList.remove("popup_opened");
   removeEscapeListener();
 }
 
-function openProfileModal(event) {
+function openProfilepopup(event) {
   newProfileFormDescription.value = `${profileFormDescription.textContent}`;
   newProfileFormName.value = `${profileFormName.textContent}`;
-  openModal(editModal);
+  openpopup(editpopup);
 }
 
-function openAddModal() {
+function openAddpopup() {
   locationTitleInput.value = "";
   locationURLInput.value = "";
-  openModal(addModal);
+  openpopup(addpopup);
 }
 
 function changeProfileInfo(event) {
   profileFormName.textContent = `${newProfileFormName.value}`;
   profileFormDescription.textContent = `${newProfileFormDescription.value}`;
-  closeModal(editModal);
+  closepopup(editpopup);
   event.preventDefault();
 }
 
@@ -82,7 +82,7 @@ function addLocationCard(event) {
   const newLocationImage = locationURLInput.value;
   const newLocation = { name: newLocationTitle, link: newLocationImage };
   cardContainer.prepend(createCard(newLocation));
-  closeModal(addModal);
+  closepopup(addpopup);
   event.preventDefault();
 }
 
@@ -95,11 +95,11 @@ function deleteCard(event) {
 }
 
 function openImageModel(event) {
-  const imageModalImage = imageModal.querySelector(".image-modal__image");
-  imageModalImage.src = event.target.src;
-  imageModalImage.alt = event.target.alt;
-  imageModal.querySelector(".image-modal__text").textContent = event.target.alt;
-  openModal(imageModal);
+  const imagepopupImage = imagepopup.querySelector(".image-popup__image");
+  imagepopupImage.src = event.target.src;
+  imagepopupImage.alt = event.target.alt;
+  imagepopup.querySelector(".image-popup__text").textContent = event.target.alt;
+  openpopup(imagepopup);
 }
 
 function createCard(cardData) {
@@ -124,13 +124,13 @@ function renderCards(data) {
 
 renderCards(initialCards);
 
-editButton.addEventListener("click", openProfileModal);
-addButton.addEventListener("click", openAddModal);
+editButton.addEventListener("click", openProfilepopup);
+addButton.addEventListener("click", openAddpopup);
 editForm.addEventListener("submit", changeProfileInfo);
 addForm.addEventListener("submit", addLocationCard);
 closeButtons.forEach((button) => {
-  const modal = button.closest(".modal");
-  button.addEventListener("click", () => closeModal(modal));
+  const popup = button.closest(".popup");
+  button.addEventListener("click", () => closepopup(popup));
 });
 
 function addEscapeListener() {
@@ -143,19 +143,19 @@ function removeEscapeListener() {
 
 function escapeClose(event) {
   if (event.key === "Escape") {
-    modalList.forEach((modalElement) => {
-      if (modalElement.classList.contains("modal_opened")) {
-        closeModal(modalElement);
+    popupList.forEach((popupElement) => {
+      if (popupElement.classList.contains("popup_opened")) {
+        closepopup(popupElement);
       }
     });
   }
 }
 
-modalList.forEach((modalElement) => {
-  modalElement.addEventListener("click", function (event) {
+popupList.forEach((popupElement) => {
+  popupElement.addEventListener("click", function (event) {
     console.log(event);
-    if (event.target.classList.contains("modal")) {
-      closeModal(modalElement);
+    if (event.target.classList.contains("popup")) {
+      closepopup(popupElement);
     }
   });
 });

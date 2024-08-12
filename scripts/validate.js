@@ -39,7 +39,7 @@ function toggleButtonState(inputList, buttonElement) {
   }
 }
 
-function setEventListeners(formElement) {
+function setEventListeners(formElement, options) {
   const inputList = Array.from(formElement.querySelectorAll(".form__input"));
   const buttonElement = formElement.querySelector(".form__button");
   toggleButtonState(inputList, buttonElement);
@@ -52,7 +52,7 @@ function setEventListeners(formElement) {
   });
 }
 
-function enableValidation() {
+function enableValidation(options) {
   const formList = Array.from(document.querySelectorAll(".form"));
   formList.forEach((formElement) => {
     setEventListeners(formElement);
