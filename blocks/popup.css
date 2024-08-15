@@ -34,6 +34,26 @@
   right: -45px;
 }
 
+.popup__input_type_error {
+  border-bottom: 1px solid red;
+}
+
+.popup__button-disabled {
+  background-color: #fff;
+  color: lightgray;
+  border: lightgray solid 1px;
+}
+
+.popup__error_visible {
+  min-height: 12px;
+  font-family: "Inter";
+  font-size: 12px;
+  font-weight: 400;
+
+  color: #ff0000;
+  position: absolute;
+}
+
 @media (max-width: 550px) {
   .popup__container {
     width: 282px;
