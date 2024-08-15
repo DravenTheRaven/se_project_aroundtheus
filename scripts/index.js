@@ -29,51 +29,44 @@ const template = document.querySelector("#card__template");
 const cardContainer = document.querySelector(".cards");
 const editButton = document.querySelector(".profile__edit-button");
 const addButton = document.querySelector(".profile__button");
-const imagepopup = document.querySelector(".image-popup");
+const imagePopup = document.querySelector(".image-popup");
 const profileFormName = document.querySelector(".profile__title");
 const profileFormDescription = document.querySelector(".profile__subtitle");
 const editForm = document.querySelector(".edit-form");
 const addForm = document.querySelector(".add-form");
 const newProfileFormName = document.querySelector(".form__name");
 const newProfileFormDescription = document.querySelector(".form__description");
-const editpopup = document.querySelector(".edit-popup");
-const addpopup = document.querySelector(".add-popup");
+const editPopup = document.querySelector(".edit-popup");
+const addPopup = document.querySelector(".add-popup");
 const closeButtons = document.querySelectorAll(".popup__close-button");
 const popupList = Array.from(document.querySelectorAll(".popup"));
 const locationTitleInput = document.querySelector(".form__location-title");
 const locationURLInput = document.querySelector(".form__image-url");
 
-function openAndClosepopup(popup) {
-  popup.classList.toggle("popup_opened");
-  addEscapeListener();
-}
-
-function openpopup(popup) {
+function openPopup(popup) {
   popup.classList.add("popup_opened");
   addEscapeListener();
 }
 
-function closepopup(popup) {
+function closePopup(popup) {
   popup.classList.remove("popup_opened");
   removeEscapeListener();
 }
 
-function openProfilepopup(event) {
+function openProfilePopup(event) {
   newProfileFormDescription.value = `${profileFormDescription.textContent}`;
   newProfileFormName.value = `${profileFormName.textContent}`;
-  openpopup(editpopup);
+  openPopup(editPopup);
 }
 
-function openAddpopup() {
-  locationTitleInput.value = "";
-  locationURLInput.value = "";
-  openpopup(addpopup);
+function openAddPopup() {
+  openPopup(addPopup);
 }
 
 function changeProfileInfo(event) {
   profileFormName.textContent = `${newProfileFormName.value}`;
   profileFormDescription.textContent = `${newProfileFormDescription.value}`;
-  closepopup(editpopup);
+  closePopup(editPopup);
   event.preventDefault();
 }
 
@@ -82,7 +75,9 @@ function addLocationCard(event) {
   const newLocationImage = locationURLInput.value;
   const newLocation = { name: newLocationTitle, link: newLocationImage };
   cardContainer.prepend(createCard(newLocation));
-  closepopup(addpopup);
+  closePopup(addPopup);
+  locationTitleInput.value = "";
+  locationURLInput.value = "";
   event.preventDefault();
 }
 
@@ -95,11 +90,11 @@ function deleteCard(event) {
 }
 
 function openImageModel(event) {
-  const imagepopupImage = imagepopup.querySelector(".image-popup__image");
+  const imagepopupImage = imagePopup.querySelector(".image-popup__image");
   imagepopupImage.src = event.target.src;
   imagepopupImage.alt = event.target.alt;
-  imagepopup.querySelector(".image-popup__text").textContent = event.target.alt;
-  openpopup(imagepopup);
+  imagePopup.querySelector(".image-popup__text").textContent = event.target.alt;
+  openPopup(imagePopup);
 }
 
 function createCard(cardData) {
@@ -124,13 +119,13 @@ function renderCards(data) {
 
 renderCards(initialCards);
 
-editButton.addEventListener("click", openProfilepopup);
-addButton.addEventListener("click", openAddpopup);
+editButton.addEventListener("click", openProfilePopup);
+addButton.addEventListener("click", openAddPopup);
 editForm.addEventListener("submit", changeProfileInfo);
 addForm.addEventListener("submit", addLocationCard);
 closeButtons.forEach((button) => {
   const popup = button.closest(".popup");
-  button.addEventListener("click", () => closepopup(popup));
+  button.addEventListener("click", () => closePopup(popup));
 });
 
 function addEscapeListener() {
@@ -145,7 +140,7 @@ function escapeClose(event) {
   if (event.key === "Escape") {
     popupList.forEach((popupElement) => {
       if (popupElement.classList.contains("popup_opened")) {
-        closepopup(popupElement);
+        closePopup(popupElement);
       }
     });
   }
@@ -155,7 +150,7 @@ popupList.forEach((popupElement) => {
   popupElement.addEventListener("click", function (event) {
     console.log(event);
     if (event.target.classList.contains("popup")) {
-      closepopup(popupElement);
+      closePopup(popupElement);
     }
   });
 });

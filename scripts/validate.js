@@ -22,15 +22,15 @@ function checkInputValidity(formElement, inputElement) {
   }
 }
 
-function hasValidInput(inputList) {
+function checkValidInput(inputList) {
   return inputList.some((inputElement) => {
     return !inputElement.validity.valid;
   });
 }
 
 function toggleButtonState(inputList, buttonElement) {
-  console.log(hasValidInput(inputList));
-  if (hasValidInput(inputList)) {
+  console.log(checkValidInput(inputList));
+  if (checkValidInput(inputList)) {
     buttonElement.setAttribute("disabled", "");
     buttonElement.classList.add("form__button-disabled");
   } else {
