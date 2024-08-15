@@ -129,14 +129,14 @@ closeButtons.forEach((button) => {
 });
 
 function addEscapeListener() {
-  document.addEventListener("keydown", escapeClose);
+  document.addEventListener("keydown", closeEscape);
 }
 
 function removeEscapeListener() {
-  document.removeEventListener("keydown", escapeClose);
+  document.removeEventListener("keydown", closeEscape);
 }
 
-function escapeClose(event) {
+function closeEscape(event) {
   if (event.key === "Escape") {
     popupList.forEach((popupElement) => {
       if (popupElement.classList.contains("popup_opened")) {
