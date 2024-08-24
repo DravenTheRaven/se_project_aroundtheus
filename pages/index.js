@@ -1,3 +1,6 @@
+import { Card } from "/components/Card.js";
+import { FormValidator } from "/components/FormValidator.js";
+
 const initialCards = [
   {
     name: "Yosemite Valley",
@@ -42,6 +45,14 @@ const closeButtons = document.querySelectorAll(".popup__close-button");
 const popupList = Array.from(document.querySelectorAll(".popup"));
 const locationTitleInput = document.querySelector(".form__location-title");
 const locationURLInput = document.querySelector(".form__image-url");
+const options = {
+  formSelector: ".popup__form",
+  inputSelector: ".popup__input",
+  submitButtonSelector: ".popup__button",
+  inactiveButtonClass: "popup__button_disabled",
+  inputErrorClass: "popup__input_type_error",
+  errorClass: "popup__error_visible",
+};
 
 function openPopup(popup) {
   popup.classList.add("popup_opened");
@@ -56,6 +67,9 @@ function closePopup(popup) {
 function openProfilePopup(event) {
   newProfileFormDescription.value = `${profileFormDescription.textContent}`;
   newProfileFormName.value = `${profileFormName.textContent}`;
+  editFormValidator.enableSubmitButton(
+    editFormValidator.formElement.querySelector(".popup__button")
+  );
   openPopup(editPopup);
 }
 
@@ -78,15 +92,10 @@ function addLocationCard(event) {
   closePopup(addPopup);
   locationTitleInput.value = "";
   locationURLInput.value = "";
+  addFormValidator.disableSubmitButton(
+    addFormValidator.formElement.querySelector(".popup__button")
+  );
   event.preventDefault();
-}
-
-function likeCard(event) {
-  event.target.classList.toggle("card__button-clicked");
-}
-
-function deleteCard(event) {
-  event.target.closest(".card").remove();
 }
 
 function openImageModel(event) {
@@ -98,23 +107,15 @@ function openImageModel(event) {
 }
 
 function createCard(cardData) {
-  const templateClone = template.content.cloneNode(true);
-  const cardImage = templateClone.querySelector(".card__image");
-  cardImage.src = cardData.link;
-  cardImage.alt = cardData.name;
-  templateClone.querySelector(".card__text").textContent = cardData.name;
-  templateClone
-    .querySelector(".card__button")
-    .addEventListener("click", likeCard);
-  templateClone
-    .querySelector(".card__delete-button")
-    .addEventListener("click", deleteCard);
-  cardImage.addEventListener("click", openImageModel);
-  return templateClone;
+  const newCard = new Card(cardData, template, openImageModel);
+  return newCard.card;
 }
 
 function renderCards(data) {
-  data.forEach((element) => cardContainer.append(createCard(element)));
+  data.forEach((element) => {
+    const card = new Card(element, template, openImageModel);
+    cardContainer.append(card.card);
+  });
 }
 
 renderCards(initialCards);
@@ -154,3 +155,9 @@ popupList.forEach((popupElement) => {
     }
   });
 });
+
+const editFormValidator = new FormValidator(options, editForm);
+const addFormValidator = new FormValidator(options, addForm);
+editFormValidator.enableValidation();
+addFormValidator.enableValidation();
+console.log(editFormValidator);
