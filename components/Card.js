@@ -4,16 +4,16 @@ export class Card {
     this.link = data.link;
     this.template = cardSelector;
     this.handleImageClick = handleImageClick;
+    this.templateClone = this.template.content.cloneNode(true);
+    this.cardImage = this.templateClone.querySelector(".card__image");
   }
 
   getCard() {
-    const templateClone = this.template.content.cloneNode(true);
-    const cardImage = templateClone.querySelector(".card__image");
-    cardImage.src = this.link;
-    cardImage.alt = this.name;
-    templateClone.querySelector(".card__text").textContent = this.name;
-    this._setEventListeners(templateClone, cardImage);
-    return templateClone;
+    this.cardImage.src = this.link;
+    this.cardImage.alt = this.name;
+    this.templateClone.querySelector(".card__text").textContent = this.name;
+    this._setEventListeners();
+    return this.templateClone;
   }
 
   _deleteCard(event) {
@@ -24,13 +24,13 @@ export class Card {
     event.target.classList.toggle("card__button-clicked");
   }
 
-  _setEventListeners(templateClone, cardImage) {
-    templateClone
+  _setEventListeners() {
+    this.templateClone
       .querySelector(".card__button")
       .addEventListener("click", this._likeCard);
-    templateClone
+    this.templateClone
       .querySelector(".card__delete-button")
       .addEventListener("click", this._deleteCard);
-    cardImage.addEventListener("click", this.handleImageClick);
+    this.cardImage.addEventListener("click", this.handleImageClick);
   }
 }
