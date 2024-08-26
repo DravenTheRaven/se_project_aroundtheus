@@ -5,36 +5,36 @@ export class FormValidator {
     this.inputList = Array.from(
       this.formElement.querySelectorAll(".form__input")
     );
+    this.buttonElement = this.formElement.querySelector(".popup__button");
   }
 
   _setEventListeners() {
-    const buttonElement = this.formElement.querySelector(".popup__button");
-    this._toggleButtonState(buttonElement);
+    this._toggleButtonState();
     this.inputList.forEach((inputElement) => {
       inputElement.addEventListener("input", () => {
         this._checkInputValidity(inputElement);
-        this._toggleButtonState(buttonElement);
+        this._toggleButtonState();
       });
     });
   }
 
-  _toggleButtonState(buttonElement) {
+  _toggleButtonState() {
     if (this._checkValidInput()) {
-      this.disableSubmitButton(buttonElement);
+      this.disableSubmitButton();
     } else {
-      this.enableSubmitButton(buttonElement);
+      this.enableSubmitButton();
     }
   }
 
-  disableSubmitButton(buttonElement) {
-    buttonElement.setAttribute("disabled", "");
-    buttonElement.classList.add("popup__button-disabled");
+  disableSubmitButton() {
+    this.buttonElement.setAttribute("disabled", "");
+    this.buttonElement.classList.add("popup__button-disabled");
   }
 
-  enableSubmitButton(buttonElement) {
+  enableSubmitButton() {
     if (!this._checkValidInput()) {
-      buttonElement.removeAttribute("disabled");
-      buttonElement.classList.remove("popup__button-disabled");
+      this.buttonElement.removeAttribute("disabled");
+      this.buttonElement.classList.remove("popup__button-disabled");
       this.inputList.forEach((input) => {
         this._hideInputError(input);
       });

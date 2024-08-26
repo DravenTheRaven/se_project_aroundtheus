@@ -67,9 +67,7 @@ function closePopup(popup) {
 function openProfilePopup(event) {
   newProfileFormDescription.value = `${profileFormDescription.textContent}`;
   newProfileFormName.value = `${profileFormName.textContent}`;
-  editFormValidator.enableSubmitButton(
-    editFormValidator.formElement.querySelector(".popup__button")
-  );
+  editFormValidator.enableSubmitButton();
   openPopup(editPopup);
 }
 
@@ -91,9 +89,7 @@ function addLocationCard(event) {
   cardContainer.prepend(createCard(newLocation));
   closePopup(addPopup);
   event.target.reset();
-  addFormValidator.disableSubmitButton(
-    addFormValidator.formElement.querySelector(".popup__button")
-  );
+  addFormValidator.disableSubmitButton();
   event.preventDefault();
 }
 
