@@ -90,8 +90,7 @@ function addLocationCard(event) {
   const newLocation = { name: newLocationTitle, link: newLocationImage };
   cardContainer.prepend(createCard(newLocation));
   closePopup(addPopup);
-  locationTitleInput.value = "";
-  locationURLInput.value = "";
+  event.target.reset();
   addFormValidator.disableSubmitButton(
     addFormValidator.formElement.querySelector(".popup__button")
   );
@@ -108,13 +107,12 @@ function openImageModel(event) {
 
 function createCard(cardData) {
   const newCard = new Card(cardData, template, openImageModel);
-  return newCard.card;
+  return newCard.getCard();
 }
 
 function renderCards(data) {
   data.forEach((element) => {
-    const card = new Card(element, template, openImageModel);
-    cardContainer.append(card.card);
+    cardContainer.append(createCard(element));
   });
 }
 
