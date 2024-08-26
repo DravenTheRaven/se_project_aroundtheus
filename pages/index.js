@@ -99,9 +99,9 @@ function addLocationCard(event) {
 }
 
 function openImageModel(event) {
-  const imagepopupImage = imagePopup.querySelector(".image-popup__image");
-  imagepopupImage.src = event.target.src;
-  imagepopupImage.alt = event.target.alt;
+  const imagePopupImage = imagePopup.querySelector(".image-popup__image");
+  imagePopupImage.src = event.target.src;
+  imagePopupImage.alt = event.target.alt;
   imagePopup.querySelector(".image-popup__text").textContent = event.target.alt;
   openPopup(imagePopup);
 }
