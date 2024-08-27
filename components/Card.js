@@ -1,19 +1,19 @@
 export class Card {
   constructor(data, cardSelector, handleImageClick) {
-    this.name = data.name;
-    this.link = data.link;
-    this.template = cardSelector;
-    this.handleImageClick = handleImageClick;
-    this.templateClone = this.template.content.cloneNode(true);
-    this.cardImage = this.templateClone.querySelector(".card__image");
+    this._name = data.name;
+    this._link = data.link;
+    this._template = cardSelector;
+    this._handleImageClick = handleImageClick;
+    this._templateClone = this._template.content.cloneNode(true);
+    this._cardImage = this._templateClone.querySelector(".card__image");
   }
 
   getCard() {
-    this.cardImage.src = this.link;
-    this.cardImage.alt = this.name;
-    this.templateClone.querySelector(".card__text").textContent = this.name;
+    this._cardImage.src = this._link;
+    this._cardImage.alt = this._name;
+    this._templateClone.querySelector(".card__text").textContent = this._name;
     this._setEventListeners();
-    return this.templateClone;
+    return this._templateClone;
   }
 
   _deleteCard(event) {
@@ -25,12 +25,12 @@ export class Card {
   }
 
   _setEventListeners() {
-    this.templateClone
+    this._templateClone
       .querySelector(".card__button")
       .addEventListener("click", this._likeCard);
-    this.templateClone
+    this._templateClone
       .querySelector(".card__delete-button")
       .addEventListener("click", this._deleteCard);
-    this.cardImage.addEventListener("click", this.handleImageClick);
+    this._cardImage.addEventListener("click", this._handleImageClick);
   }
 }

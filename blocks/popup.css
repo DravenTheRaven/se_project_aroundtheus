@@ -38,7 +38,7 @@
   border-bottom: 1px solid red;
 }
 
-.popup__button-disabled {
+.popup__button_disabled {
   background-color: #fff;
   color: lightgray;
   border: lightgray solid 1px;

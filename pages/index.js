@@ -35,8 +35,8 @@ const addButton = document.querySelector(".profile__button");
 const imagePopup = document.querySelector(".image-popup");
 const profileFormName = document.querySelector(".profile__title");
 const profileFormDescription = document.querySelector(".profile__subtitle");
-const editForm = document.querySelector(".edit-form");
-const addForm = document.querySelector(".add-form");
+const editForm = document.forms["edit_profile_form"];
+const addForm = document.forms["new_place_form"];
 const newProfileFormName = document.querySelector(".form__name");
 const newProfileFormDescription = document.querySelector(".form__description");
 const editPopup = document.querySelector(".edit-popup");
@@ -67,7 +67,7 @@ function closePopup(popup) {
 function openProfilePopup(event) {
   newProfileFormDescription.value = `${profileFormDescription.textContent}`;
   newProfileFormName.value = `${profileFormName.textContent}`;
-  editFormValidator.enableSubmitButton();
+  editFormValidator.resetValidation();
   openPopup(editPopup);
 }
 
