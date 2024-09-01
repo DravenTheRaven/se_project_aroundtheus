@@ -1,5 +1,6 @@
-import { Card } from "/components/Card.js";
-import { FormValidator } from "/components/FormValidator.js";
+import { Card } from "../components/Card.js";
+import { FormValidator } from "../components/FormValidator.js";
+import { Popup } from "../components/Popup.js";
 
 const initialCards = [
   {
@@ -39,7 +40,7 @@ const editForm = document.forms["edit_profile_form"];
 const addForm = document.forms["new_place_form"];
 const newProfileFormName = document.querySelector(".form__name");
 const newProfileFormDescription = document.querySelector(".form__description");
-const editPopup = document.querySelector(".edit-popup");
+const editPopup = new Popup(".edit-popup");
 const addPopup = document.querySelector(".add-popup");
 const closeButtons = document.querySelectorAll(".popup__close-button");
 const popupList = Array.from(document.querySelectorAll(".popup"));
@@ -114,14 +115,18 @@ function renderCards(data) {
 
 renderCards(initialCards);
 
-editButton.addEventListener("click", openProfilePopup);
+editButton.addEventListener("click", () => {
+  editPopup.open();
+  editPopup.setEventListeners();
+});
+
 addButton.addEventListener("click", openAddPopup);
 editForm.addEventListener("submit", changeProfileInfo);
 addForm.addEventListener("submit", addLocationCard);
-closeButtons.forEach((button) => {
+/*closeButtons.forEach((button) => {
   const popup = button.closest(".popup");
   button.addEventListener("click", () => closePopup(popup));
-});
+});*/
 
 function addEscapeListener() {
   document.addEventListener("keydown", closeEscape);
@@ -154,4 +159,5 @@ const editFormValidator = new FormValidator(options, editForm);
 const addFormValidator = new FormValidator(options, addForm);
 editFormValidator.enableValidation();
 addFormValidator.enableValidation();
+
 console.log(editFormValidator);
