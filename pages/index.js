@@ -1,6 +1,8 @@
 import { Card } from "../components/Card.js";
 import { FormValidator } from "../components/FormValidator.js";
 import { Popup } from "../components/Popup.js";
+import { PopupWithForm } from "../components/PopupWithForm.js";
+import { PopupWithImage } from "../components/PopupWithImage.js";
 
 const initialCards = [
   {
@@ -40,8 +42,8 @@ const editForm = document.forms["edit_profile_form"];
 const addForm = document.forms["new_place_form"];
 const newProfileFormName = document.querySelector(".form__name");
 const newProfileFormDescription = document.querySelector(".form__description");
-const editPopup = new Popup(".edit-popup");
-const addPopup = document.querySelector(".add-popup");
+const editPopup = new PopupWithForm(".edit-popup", changeProfileInfo);
+const addPopup = new PopupWithForm(".add-popup", addLocationCard);
 const closeButtons = document.querySelectorAll(".popup__close-button");
 const popupList = Array.from(document.querySelectorAll(".popup"));
 const locationTitleInput = document.querySelector(".form__location-title");
@@ -54,52 +56,43 @@ const options = {
   inputErrorClass: "popup__input_type_error",
   errorClass: "popup__error_visible",
 };
-
-function openPopup(popup) {
-  popup.classList.add("popup_opened");
-  addEscapeListener();
-}
-
-function closePopup(popup) {
-  popup.classList.remove("popup_opened");
-  removeEscapeListener();
-}
+const imagePopupTest = new PopupWithImage(".image-popup");
 
 function openProfilePopup(event) {
   newProfileFormDescription.value = `${profileFormDescription.textContent}`;
   newProfileFormName.value = `${profileFormName.textContent}`;
   editFormValidator.resetValidation();
-  openPopup(editPopup);
+  editPopup.open();
 }
 
 function openAddPopup() {
   openPopup(addPopup);
 }
 
-function changeProfileInfo(event) {
-  profileFormName.textContent = `${newProfileFormName.value}`;
-  profileFormDescription.textContent = `${newProfileFormDescription.value}`;
-  closePopup(editPopup);
+function changeProfileInfo(event, data) {
+  profileFormName.textContent = data["name-input"];
+  profileFormDescription.textContent = data["description-input"];
   event.preventDefault();
+
+  editPopup.close();
 }
 
-function addLocationCard(event) {
-  const newLocationTitle = locationTitleInput.value;
-  const newLocationImage = locationURLInput.value;
-  const newLocation = { name: newLocationTitle, link: newLocationImage };
+function addLocationCard(event, data) {
+  const newLocation = { name: data["title"], link: data["image-url"] };
   cardContainer.prepend(createCard(newLocation));
-  closePopup(addPopup);
   event.target.reset();
   addFormValidator.disableSubmitButton();
   event.preventDefault();
+  addPopup.close();
 }
 
 function openImageModel(event) {
-  const imagePopupImage = imagePopup.querySelector(".image-popup__image");
+  /*const imagePopupImage = imagePopup.querySelector(".image-popup__image");
   imagePopupImage.src = event.target.src;
   imagePopupImage.alt = event.target.alt;
   imagePopup.querySelector(".image-popup__text").textContent = event.target.alt;
-  openPopup(imagePopup);
+  openPopup(imagePopup);*/
+  imagePopupTest.open(event);
 }
 
 function createCard(cardData) {
@@ -115,49 +108,18 @@ function renderCards(data) {
 
 renderCards(initialCards);
 
-editButton.addEventListener("click", () => {
-  editPopup.open();
-  editPopup.setEventListeners();
+editButton.addEventListener("click", openProfilePopup);
+
+addButton.addEventListener("click", () => {
+  addPopup.open();
 });
-
-addButton.addEventListener("click", openAddPopup);
-editForm.addEventListener("submit", changeProfileInfo);
-addForm.addEventListener("submit", addLocationCard);
-/*closeButtons.forEach((button) => {
-  const popup = button.closest(".popup");
-  button.addEventListener("click", () => closePopup(popup));
-});*/
-
-function addEscapeListener() {
-  document.addEventListener("keydown", closeEscape);
-}
-
-function removeEscapeListener() {
-  document.removeEventListener("keydown", closeEscape);
-}
-
-function closeEscape(event) {
-  if (event.key === "Escape") {
-    popupList.forEach((popupElement) => {
-      if (popupElement.classList.contains("popup_opened")) {
-        closePopup(popupElement);
-      }
-    });
-  }
-}
-
-popupList.forEach((popupElement) => {
-  popupElement.addEventListener("click", function (event) {
-    console.log(event);
-    if (event.target.classList.contains("popup")) {
-      closePopup(popupElement);
-    }
-  });
-});
+//editForm.addEventListener("submit", changeProfileInfo);
+//addForm.addEventListener("submit", addLocationCard);
 
 const editFormValidator = new FormValidator(options, editForm);
 const addFormValidator = new FormValidator(options, addForm);
 editFormValidator.enableValidation();
 addFormValidator.enableValidation();
+imagePopupTest.setEventListeners();
 
-console.log(editFormValidator);
+console.log();

@@ -8,6 +8,7 @@ export class Popup {
   open() {
     console.log("popup open");
     this.popup.classList.add("popup_opened");
+    this.setEventListeners();
   }
 
   close() {
@@ -18,10 +19,7 @@ export class Popup {
 
   _handleEscClose(event) {
     console.log("yup");
-    if (
-      event.key === "Escape" &&
-      this.popup.classList.contains("popup_opened")
-    ) {
+    if (event.key === "Escape") {
       this.close();
     }
   }
