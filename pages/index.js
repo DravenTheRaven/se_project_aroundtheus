@@ -3,6 +3,7 @@ import { Section } from "../components/Section.js";
 import { FormValidator } from "../components/FormValidator.js";
 import { PopupWithForm } from "../components/PopupWithForm.js";
 import { PopupWithImage } from "../components/PopupWithImage.js";
+import { UserInfo } from "../components/UserInfo.js";
 import {
   initialCards,
   options,
@@ -22,33 +23,36 @@ const editPopup = new PopupWithForm(".edit-popup", changeProfileInfo);
 const addPopup = new PopupWithForm(".add-popup", addLocationCard);
 const editFormValidator = new FormValidator(options, editForm);
 const addFormValidator = new FormValidator(options, addForm);
-const imagePopupTest = new PopupWithImage(".image-popup");
-const testSection = new Section({
+const imagePopup = new PopupWithImage(".image-popup");
+const cardSection = new Section({
   renderer: (item) => {
     const cardElement = new Card(item, template, openImageModel);
-    testSection.addItem(cardElement.getCard());
+    cardSection.addItem(cardElement.getCard());
   },
   selector: ".cards",
 });
+const user = new UserInfo(
+  profileFormName,
+  profileFormDescription,
+  newProfileFormName,
+  newProfileFormDescription
+);
 
 function openProfilePopup(event) {
-  newProfileFormDescription.value = `${profileFormDescription.textContent}`;
-  newProfileFormName.value = `${profileFormName.textContent}`;
+  user.getUserInfo();
   editFormValidator.resetValidation();
   editPopup.open();
 }
 
 function changeProfileInfo(event, data) {
-  profileFormName.textContent = data["name-input"];
-  profileFormDescription.textContent = data["description-input"];
+  user.setUserInfo(data);
   event.preventDefault();
   editPopup.close();
 }
 
 function addLocationCard(event, data) {
   const newLocation = { name: data["title"], link: data["image-url"] };
-
-  testSection.renderer(newLocation);
+  cardSection.renderer(newLocation);
   event.target.reset();
   addFormValidator.disableSubmitButton();
   event.preventDefault();
@@ -56,21 +60,10 @@ function addLocationCard(event, data) {
 }
 
 function openImageModel(event) {
-  imagePopupTest.open(event);
+  imagePopup.open(event);
 }
 
-function createCard(cardData) {
-  const newCard = new Card(cardData, template, openImageModel);
-  return newCard.getCard();
-}
-
-function renderCards(data) {
-  data.forEach((element) => {
-    cardContainer.append(createCard(element));
-  });
-}
-
-testSection.renderItems(initialCards);
+cardSection.renderItems(initialCards);
 
 editButton.addEventListener("click", openProfilePopup);
 
@@ -80,4 +73,4 @@ addButton.addEventListener("click", () => {
 
 editFormValidator.enableValidation();
 addFormValidator.enableValidation();
-imagePopupTest.setEventListeners();
+imagePopup.setEventListeners();
