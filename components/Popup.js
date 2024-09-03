@@ -6,22 +6,17 @@ export class Popup {
   }
 
   open() {
-    console.log("popup open");
     this.popup.classList.add("popup_opened");
+    this.setEventListeners();
   }
 
   close() {
-    console.log("popup close");
     this.popup.classList.remove("popup_opened");
     document.removeEventListener("keydown", this._handleEscClose);
   }
 
   _handleEscClose(event) {
-    console.log("yup");
-    if (
-      event.key === "Escape" &&
-      this.popup.classList.contains("popup_opened")
-    ) {
+    if (event.key === "Escape") {
       this.close();
     }
   }
