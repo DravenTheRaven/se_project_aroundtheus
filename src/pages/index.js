@@ -17,7 +17,8 @@ import {
   addForm,
   newProfileFormName,
   newProfileFormDescription,
-} from "./constants.js";
+} from "../utils/utils.js";
+import "./index.css";
 
 const editPopup = new PopupWithForm(".edit-popup", changeProfileInfo);
 const addPopup = new PopupWithForm(".add-popup", addLocationCard);

@@ -7,7 +7,7 @@
     <meta name="description" content="Around the US" />
     <meta name="keywords" content="United States, Travel, Landmarks" />
     <link rel="shortcut icon" href="./favicon.ico" />
-    <link rel="stylesheet" href="./pages/index.css" />
+
     <title>Around the US</title>
   </head>
   <body>
@@ -15,7 +15,7 @@
       <header class="header page__section">
         <img
           class="header__logo"
-          src="images/logo.svg"
+          src="<%=require('./images/logo.svg')%>"
           alt="Around the US Logo"
         />
       </header>
@@ -23,7 +23,7 @@
         <section class="profile page__section">
           <img
             class="profile__avatar"
-            src="images/jacques-cousteau.jpg"
+            src="<%=require('./images/jacques-cousteau.jpg')%>"
             alt="Avatar"
           />
           <div class="profile__info">
@@ -127,9 +127,5 @@
         <button type="button" class="card__delete-button"></button>
       </div>
     </template>
-    <script type="module" src="./pages/index.js"></script>
-    <script type="module" src="./components/Card.js"></script>
-    <script type="module" src="./components/FormValidator.js"></script>
-    <script type="module" src="./components/Popup.js"></script>
   </body>
 </html>
