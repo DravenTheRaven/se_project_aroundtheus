@@ -75,3 +75,5 @@ addButton.addEventListener("click", () => {
 editFormValidator.enableValidation();
 addFormValidator.enableValidation();
 imagePopup.setEventListeners();
+addPopup.setEventListeners();
+editPopup.setEventListeners();
