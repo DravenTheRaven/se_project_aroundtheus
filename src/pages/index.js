@@ -47,7 +47,6 @@ function openProfilePopup(event) {
 
 function changeProfileInfo(event, data) {
   user.setUserInfo(data);
-  event.preventDefault();
   editPopup.close();
 }
 
@@ -56,7 +55,6 @@ function addLocationCard(event, data) {
   cardSection.renderer(newLocation);
   event.target.reset();
   addFormValidator.disableSubmitButton();
-  event.preventDefault();
   addPopup.close();
 }
 
