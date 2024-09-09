@@ -8,7 +8,6 @@ import {
   initialCards,
   options,
   template,
-  cardContainer,
   editButton,
   addButton,
   profileFormName,
@@ -32,15 +31,13 @@ const cardSection = new Section({
   },
   selector: ".cards",
 });
-const user = new UserInfo(
-  profileFormName,
-  profileFormDescription,
-  newProfileFormName,
-  newProfileFormDescription
-);
+const user = new UserInfo(profileFormName, profileFormDescription);
 
-function openProfilePopup(event) {
-  user.getUserInfo();
+function openProfilePopup() {
+  const userInfo = user.getUserInfo();
+  newProfileFormName.value = userInfo["name-input"];
+  newProfileFormDescription.value = userInfo["description-input"];
+  user.setUserInfo(userInfo);
   editFormValidator.resetValidation();
   editPopup.open();
 }

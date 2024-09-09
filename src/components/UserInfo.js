@@ -1,23 +1,18 @@
 export class UserInfo {
-  constructor(
-    profileFormName,
-    profileFormDescription,
-    newProfileFormName,
-    newProfileFormDescription
-  ) {
-    this.profileFormName = profileFormName;
-    this.profileFormDescription = profileFormDescription;
-    this.newProfileFormName = newProfileFormName;
-    this.newProfileFormDescription = newProfileFormDescription;
+  constructor(profileFormName, profileFormDescription) {
+    this._profileFormName = profileFormName;
+    this._profileFormDescription = profileFormDescription;
   }
 
   getUserInfo() {
-    this.newProfileFormDescription.value = `${this.profileFormDescription.textContent}`;
-    this.newProfileFormName.value = `${this.profileFormName.textContent}`;
+    return {
+      "name-input": `${this._profileFormName.textContent}`,
+      "description-input": `${this._profileFormDescription.textContent}`,
+    };
   }
 
   setUserInfo(data) {
-    this.profileFormName.textContent = data["name-input"];
-    this.profileFormDescription.textContent = data["description-input"];
+    this._profileFormName.textContent = data["name-input"];
+    this._profileFormDescription.textContent = data["description-input"];
   }
 }
