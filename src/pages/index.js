@@ -4,6 +4,7 @@ import { FormValidator } from "../components/FormValidator.js";
 import { PopupWithForm } from "../components/PopupWithForm.js";
 import { PopupWithImage } from "../components/PopupWithImage.js";
 import { UserInfo } from "../components/UserInfo.js";
+import { Api } from "../components/Api.js";
 import {
   initialCards,
   options,
@@ -72,3 +73,21 @@ addFormValidator.enableValidation();
 imagePopup.setEventListeners();
 addPopup.setEventListeners();
 editPopup.setEventListeners();
+console.log("yes");
+const api = new Api({
+  baseUrl: "https://around-api.en.tripleten-services.com/v1",
+  headers: {
+    authorization: "c56e30dc-2883-4270-a59e-b2f7bae969c6",
+    "Content-Type": "application/json",
+  },
+});
+
+const userObject = api.getUserInfo();
+api
+  .setUserInfo()
+  .then((res) => {
+    console.log(res);
+  })
+  .catch((err) => {
+    console.log(err);
+  });
