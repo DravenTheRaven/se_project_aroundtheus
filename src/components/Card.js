@@ -1,11 +1,14 @@
 export class Card {
-  constructor(data, cardSelector, handleImageClick) {
+  constructor(data, cardSelector, handleImageClick, handleDelete) {
     this._name = data.name;
     this._link = data.link;
+    this.id = data._id;
     this._template = cardSelector;
     this._handleImageClick = handleImageClick;
     this._templateClone = this._template.content.cloneNode(true);
     this._cardImage = this._templateClone.querySelector(".card__image");
+    this.handleDelete = handleDelete;
+    console.log(this.id);
   }
 
   getCard() {
@@ -30,7 +33,10 @@ export class Card {
       .addEventListener("click", this._likeCard);
     this._templateClone
       .querySelector(".card__delete-button")
-      .addEventListener("click", this._deleteCard);
+      .addEventListener("click", (event) => {
+        this._deleteCard(event);
+        this.handleDelete(this.id);
+      });
     this._cardImage.addEventListener("click", this._handleImageClick);
   }
 }

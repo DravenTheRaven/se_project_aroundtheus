@@ -1,49 +1,53 @@
 export class Api {
   constructor(options) {
     this.options = options;
+    this.baseUrl = options.baseUrl;
+    this.headers = options.headers;
   }
 
   getCards() {
-    return fetch("https://around-api.en.tripleten-services.com/v1/cards", {
-      headers: {
-        authorization: "c6945e47-b548-4e1c-b20e-926f9841fa5f",
-      },
-    }).then((res) => {
-      if (res.ok) {
-        //console.log(res.json());
-        return res.json();
-      }
+    return fetch(`${this.baseUrl}/cards`, {
+      headers: this.headers,
     });
   }
 
-  getUserInfo() {
-    const userInfo = this._makeRequest(
-      "https://around-api.en.tripleten-services.com/v1/users/me"
-    );
+  fetchUserInfo() {
+    return fetch(`${this.baseUrl}/users/me`, {
+      headers: this.headers,
+    });
   }
 
-  setUserInfo() {
+  postUserInfo(userInfo) {
     return fetch("https://around-api.en.tripleten-services.com/v1/users/me", {
       method: "PATCH",
-      headers: {
-        authorization: "c6945e47-b548-4e1c-b20e-926f9841fa5f",
-      },
+      headers: this.headers,
       body: JSON.stringify({
-        name: "Marie Skłodowska Curie",
-        about: "Physicist and Chemist",
+        name: `${userInfo["name-input"]}`,
+        about: `${userInfo["description-input"]}`,
       }),
     });
   }
 
-  _makeRequest(url) {
-    return fetch(`${url}`, {
-      headers: {
-        authorization: "c6945e47-b548-4e1c-b20e-926f9841fa5f",
-      },
-    })
-      .then((res) => res.json())
-      .then((result) => {
-        console.log(result);
-      });
+  postCard(locationInfo) {
+    return fetch("https://around-api.en.tripleten-services.com/v1/cards", {
+      method: "POST",
+      headers: this.headers,
+      body: JSON.stringify({
+        name: `${locationInfo.name}`,
+        link: `${locationInfo.link}`,
+      }),
+    });
+  }
+
+  deleteCard(locationCardId) {
+    return fetch(
+      "https://around-api.en.tripleten-services.com/v1/cards/" + locationCardId,
+      {
+        method: "DELETE",
+        headers: {
+          authorization: "c6945e47-b548-4e1c-b20e-926f9841fa5f",
+        },
+      }
+    );
   }
 }

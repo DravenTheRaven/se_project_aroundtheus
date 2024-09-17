@@ -20,6 +20,14 @@ import {
 } from "../utils/utils.js";
 import "./index.css";
 
+const api = new Api({
+  baseUrl: "https://around-api.en.tripleten-services.com/v1",
+  headers: {
+    authorization: "c6945e47-b548-4e1c-b20e-926f9841fa5f",
+    "Content-Type": "application/json",
+  },
+});
+
 const editPopup = new PopupWithForm(".edit-popup", changeProfileInfo);
 const addPopup = new PopupWithForm(".add-popup", addLocationCard);
 const editFormValidator = new FormValidator(options, editForm);
@@ -27,7 +35,13 @@ const addFormValidator = new FormValidator(options, addForm);
 const imagePopup = new PopupWithImage(".image-popup");
 const cardSection = new Section({
   renderer: (item) => {
-    const cardElement = new Card(item, template, openImageModel);
+    console.log(item);
+    const cardElement = new Card(
+      item,
+      template,
+      openImageModel,
+      api.deleteCard
+    );
     cardSection.addItem(cardElement.getCard());
   },
   selector: ".cards",
@@ -45,11 +59,14 @@ function openProfilePopup() {
 
 function changeProfileInfo(event, data) {
   user.setUserInfo(data);
+  api.postUserInfo(data);
+  api.fetchUserInfo();
   editPopup.close();
 }
 
 function addLocationCard(event, data) {
   const newLocation = { name: data["title"], link: data["image-url"] };
+  api.postCard(newLocation);
   cardSection.renderer(newLocation);
   event.target.reset();
   addFormValidator.disableSubmitButton();
@@ -57,10 +74,9 @@ function addLocationCard(event, data) {
 }
 
 function openImageModel(event) {
+  console.log(event.target);
   imagePopup.open(event);
 }
-
-cardSection.renderItems(initialCards);
 
 editButton.addEventListener("click", openProfilePopup);
 
@@ -74,20 +90,39 @@ imagePopup.setEventListeners();
 addPopup.setEventListeners();
 editPopup.setEventListeners();
 console.log("yes");
-const api = new Api({
-  baseUrl: "https://around-api.en.tripleten-services.com/v1",
-  headers: {
-    authorization: "c56e30dc-2883-4270-a59e-b2f7bae969c6",
-    "Content-Type": "application/json",
-  },
-});
 
-const userObject = api.getUserInfo();
+const testCards = async () => {
+  const cards = await api
+    .getCards()
+    .then((res) => res.json())
+    .then((data) => data);
+  let count = 0;
+
+  cards.forEach((card) => {
+    console.log(card._id);
+    cardSection.renderer(card);
+  });
+};
+console.log(testCards());
+//api.getCards().then((res) => console.log(res));
+/*api
+  .fetchUserInfo()
+  .then((res) => res.json())
+  .then((userData) => {
+    console.log(userData);
+    user.setUserInfo({
+      "name-input": userData.name,
+      "description-input": userData.about,
+    });
+  });*/
+
 api
-  .setUserInfo()
-  .then((res) => {
-    console.log(res);
-  })
-  .catch((err) => {
-    console.log(err);
+  .fetchUserInfo()
+  .then((res) => res.json())
+  .then((userData) => {
+    console.log(userData);
+    user.setUserInfo({
+      "name-input": userData.name,
+      "description-input": userData.about,
+    });
   });
