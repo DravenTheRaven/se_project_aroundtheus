@@ -50,4 +50,32 @@ export class Api {
       }
     );
   }
+
+  handleLike(locationCardId, isLiked) {
+    if (!isLiked) {
+      return fetch(
+        "https://around-api.en.tripleten-services.com/v1/cards/" +
+          locationCardId +
+          "/likes",
+        {
+          method: "PUT",
+          headers: {
+            authorization: "c6945e47-b548-4e1c-b20e-926f9841fa5f",
+          },
+        }
+      );
+    } else {
+      return fetch(
+        "https://around-api.en.tripleten-services.com/v1/cards/" +
+          locationCardId +
+          "/likes",
+        {
+          method: "DELETE",
+          headers: {
+            authorization: "c6945e47-b548-4e1c-b20e-926f9841fa5f",
+          },
+        }
+      );
+    }
+  }
 }

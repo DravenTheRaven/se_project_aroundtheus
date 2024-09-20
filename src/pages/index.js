@@ -35,12 +35,12 @@ const addFormValidator = new FormValidator(options, addForm);
 const imagePopup = new PopupWithImage(".image-popup");
 const cardSection = new Section({
   renderer: (item) => {
-    console.log(item);
     const cardElement = new Card(
       item,
       template,
       openImageModel,
-      api.deleteCard
+      api.deleteCard,
+      api.handleLike
     );
     cardSection.addItem(cardElement.getCard());
   },
@@ -66,8 +66,12 @@ function changeProfileInfo(event, data) {
 
 function addLocationCard(event, data) {
   const newLocation = { name: data["title"], link: data["image-url"] };
-  api.postCard(newLocation);
-  cardSection.renderer(newLocation);
+  api
+    .postCard(newLocation)
+    .then((res) => res.json())
+    .then((data) => {
+      cardSection.renderer(data);
+    });
   event.target.reset();
   addFormValidator.disableSubmitButton();
   addPopup.close();
@@ -96,10 +100,8 @@ const testCards = async () => {
     .getCards()
     .then((res) => res.json())
     .then((data) => data);
-  let count = 0;
 
   cards.forEach((card) => {
-    console.log(card._id);
     cardSection.renderer(card);
   });
 };
@@ -126,3 +128,8 @@ api
       "description-input": userData.about,
     });
   });
+
+function handleLike(isLiked, locationCardId) {
+  !isLiked ? api.likeCard(locationCardId) : api.dislikeCard(locationCardId);
+  isLiked = !isLiked;
+}

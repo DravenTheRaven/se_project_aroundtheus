@@ -1,14 +1,26 @@
 export class Card {
-  constructor(data, cardSelector, handleImageClick, handleDelete) {
+  constructor(data, cardSelector, handleImageClick, handleDelete, handleLike) {
     this._name = data.name;
     this._link = data.link;
     this.id = data._id;
+    this.isLiked = data.isLiked;
     this._template = cardSelector;
     this._handleImageClick = handleImageClick;
     this._templateClone = this._template.content.cloneNode(true);
     this._cardImage = this._templateClone.querySelector(".card__image");
+    this._likeButton = this._templateClone.querySelector(".card__button");
     this.handleDelete = handleDelete;
+    this.handleLike = handleLike;
     console.log(this.id);
+    this._checkInitialLike();
+  }
+
+  _checkInitialLike() {
+    if (this.isLiked) {
+      this._likeButton.classList.add("card__button-clicked");
+    } else {
+      this._likeButton.classList.remove("card__button-clicked");
+    }
   }
 
   getCard() {
@@ -30,12 +42,18 @@ export class Card {
   _setEventListeners() {
     this._templateClone
       .querySelector(".card__button")
-      .addEventListener("click", this._likeCard);
+      .addEventListener("click", (event) => {
+        this.handleLike(this.id, this.isLiked)
+          .then((res) => res.json())
+          .then((data) => console.log(data));
+        this._likeCard(event);
+        this.isLiked = !this.isLiked;
+      });
     this._templateClone
       .querySelector(".card__delete-button")
       .addEventListener("click", (event) => {
         this._deleteCard(event);
-        this.handleDelete(this.id);
+        this.handleDelete(this.id).then((res) => console.log(res.json()));
       });
     this._cardImage.addEventListener("click", this._handleImageClick);
   }
