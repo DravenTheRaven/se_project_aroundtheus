@@ -7,7 +7,7 @@ import { PopupDelete } from "../components/PopupDelete.js";
 import { UserInfo } from "../components/UserInfo.js";
 import { Api } from "../components/Api.js";
 import {
-  initialCards,
+  profilePictureWrapper,
   options,
   template,
   editButton,
@@ -19,6 +19,7 @@ import {
   confirmDeleteForm,
   newProfileFormName,
   newProfileFormDescription,
+  profilePicture,
 } from "../utils/utils.js";
 import "./index.css";
 
@@ -32,9 +33,13 @@ const api = new Api({
 
 const editPopup = new PopupWithForm(".edit-popup", changeProfileInfo);
 const addPopup = new PopupWithForm(".add-popup", addLocationCard);
-
+const profilePicturePopup = new PopupWithForm(
+  ".profile-picture-popup",
+  changeProfilePicture
+);
 const editFormValidator = new FormValidator(options, editForm);
 const addFormValidator = new FormValidator(options, addForm);
+
 const imagePopup = new PopupWithImage(".image-popup");
 const cardSection = new Section({
   renderer: (item) => {
@@ -85,6 +90,10 @@ function openImageModel(event) {
   imagePopup.open(event);
 }
 
+function openEditProfilePicture() {
+  profilePicturePopup.open();
+}
+
 function openConfirmDelete(locationCardId, locationCard) {
   const deletePopup = new PopupDelete(
     ".confirm-delete-popup",
@@ -93,12 +102,18 @@ function openConfirmDelete(locationCardId, locationCard) {
     deleteLocationCard
   );
   deletePopup.setEventListeners();
-
   deletePopup.open();
 }
 
 function deleteLocationCard(locationCardId, locationCard) {
   api.deleteCard(locationCardId).then(locationCard.remove());
+}
+
+function changeProfilePicture(event, pictureLink) {
+  profilePicture.src = pictureLink["image-url"];
+  console.log(profilePicture.src);
+  api.changeProfilePicture(pictureLink).then(api.fetchUserInfo());
+  profilePicturePopup.close();
 }
 
 editButton.addEventListener("click", openProfilePopup);
@@ -107,11 +122,14 @@ addButton.addEventListener("click", () => {
   addPopup.open();
 });
 
+profilePictureWrapper.addEventListener("click", openEditProfilePicture);
+
 editFormValidator.enableValidation();
 addFormValidator.enableValidation();
 imagePopup.setEventListeners();
 addPopup.setEventListeners();
 editPopup.setEventListeners();
+profilePicturePopup.setEventListeners();
 
 const testCards = async () => {
   const cards = await api
@@ -124,29 +142,15 @@ const testCards = async () => {
   });
 };
 testCards();
-//api.getCards().then((res) => console.log(res));
-/*api
-  .fetchUserInfo()
-  .then((res) => res.json())
-  .then((userData) => {
-    console.log(userData);
-    user.setUserInfo({
-      "name-input": userData.name,
-      "description-input": userData.about,
-    });
-  });*/
 
 api
   .fetchUserInfo()
   .then((res) => res.json())
   .then((userData) => {
+    console.log(userData);
+    profilePicture.src = userData.avatar;
     user.setUserInfo({
       "name-input": userData.name,
       "description-input": userData.about,
     });
   });
-
-function handleLike(isLiked, locationCardId) {
-  !isLiked ? api.likeCard(locationCardId) : api.dislikeCard(locationCardId);
-  isLiked = !isLiked;
-}

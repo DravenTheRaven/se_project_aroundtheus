@@ -22,11 +22,7 @@
       <main class="content">
         <section class="profile page__section">
           <div class="profile__avatar_wrapper">
-            <img
-              class="profile__avatar"
-              src="<%=require('./images/jacques-cousteau.jpg')%>"
-              alt="Avatar"
-            />
+            <img class="profile__avatar" src="" alt="Avatar" />
             <img
               class="profile__edit-icon"
               src="<%=require('./images/edit-icon.svg')%>"
@@ -120,13 +116,37 @@
           </div>
         </section>
         <section class="popup confirm-delete-popup">
-          <div class="popup__container">
+          <div class="popup__container popup_delete">
             <form class="form delete-form popup__form" id="confirm_delete_form">
               <fieldset class="form__fieldset">
                 <legend class="form__title">Are you sure?</legend>
               </fieldset>
               <button type="submit" class="form__button popup__button">
                 Yes
+              </button>
+            </form>
+            <button type="button" class="popup__close-button"></button>
+          </div>
+        </section>
+        <section class="popup profile-picture-popup">
+          <div class="popup__container popup_change_profile_picture">
+            <form
+              class="form profile-picture-form popup__form"
+              id="new_profile_picture_form"
+            >
+              <fieldset class="form__fieldset">
+                <legend class="form__title">Change profile picture</legend>
+                <input
+                  placeholder="Image URL"
+                  class="form__input form__image-url popup__input"
+                  id="image-url"
+                  type="url"
+                  required
+                />
+                <span class="popup__error_visible form__image-url-error"></span>
+              </fieldset>
+              <button type="submit" class="form__button popup__button">
+                Save
               </button>
             </form>
             <button type="button" class="popup__close-button"></button>

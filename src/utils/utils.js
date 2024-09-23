@@ -47,3 +47,7 @@ export const confirmDeleteForm = document.forms["confirm_delete_form"];
 export const newProfileFormName = document.querySelector(".form__name");
 export const newProfileFormDescription =
   document.querySelector(".form__description");
+export const profilePicture = document.querySelector(".profile__avatar");
+export const profilePictureWrapper = document.querySelector(
+  ".profile__avatar_wrapper"
+);

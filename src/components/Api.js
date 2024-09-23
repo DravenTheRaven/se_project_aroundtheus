@@ -78,4 +78,18 @@ export class Api {
       );
     }
   }
+
+  changeProfilePicture(pictureLink) {
+    console.log(pictureLink["image-url"]);
+    return fetch(
+      "https://around-api.en.tripleten-services.com/v1/users/me/avatar",
+      {
+        method: "PATCH",
+        headers: this.headers,
+        body: JSON.stringify({
+          avatar: `${pictureLink["image-url"]}`,
+        }),
+      }
+    );
+  }
 }
