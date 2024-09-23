@@ -3,6 +3,7 @@ import { Section } from "../components/Section.js";
 import { FormValidator } from "../components/FormValidator.js";
 import { PopupWithForm } from "../components/PopupWithForm.js";
 import { PopupWithImage } from "../components/PopupWithImage.js";
+import { PopupDelete } from "../components/PopupDelete.js";
 import { UserInfo } from "../components/UserInfo.js";
 import { Api } from "../components/Api.js";
 import {
@@ -15,6 +16,7 @@ import {
   profileFormDescription,
   editForm,
   addForm,
+  confirmDeleteForm,
   newProfileFormName,
   newProfileFormDescription,
 } from "../utils/utils.js";
@@ -30,6 +32,7 @@ const api = new Api({
 
 const editPopup = new PopupWithForm(".edit-popup", changeProfileInfo);
 const addPopup = new PopupWithForm(".add-popup", addLocationCard);
+
 const editFormValidator = new FormValidator(options, editForm);
 const addFormValidator = new FormValidator(options, addForm);
 const imagePopup = new PopupWithImage(".image-popup");
@@ -40,7 +43,8 @@ const cardSection = new Section({
       template,
       openImageModel,
       api.deleteCard,
-      api.handleLike
+      api.handleLike,
+      openConfirmDelete
     );
     cardSection.addItem(cardElement.getCard());
   },
@@ -78,8 +82,23 @@ function addLocationCard(event, data) {
 }
 
 function openImageModel(event) {
-  console.log(event.target);
   imagePopup.open(event);
+}
+
+function openConfirmDelete(locationCardId, locationCard) {
+  const deletePopup = new PopupDelete(
+    ".confirm-delete-popup",
+    locationCardId,
+    locationCard,
+    deleteLocationCard
+  );
+  deletePopup.setEventListeners();
+
+  deletePopup.open();
+}
+
+function deleteLocationCard(locationCardId, locationCard) {
+  api.deleteCard(locationCardId).then(locationCard.remove());
 }
 
 editButton.addEventListener("click", openProfilePopup);
@@ -93,7 +112,6 @@ addFormValidator.enableValidation();
 imagePopup.setEventListeners();
 addPopup.setEventListeners();
 editPopup.setEventListeners();
-console.log("yes");
 
 const testCards = async () => {
   const cards = await api
@@ -105,7 +123,7 @@ const testCards = async () => {
     cardSection.renderer(card);
   });
 };
-console.log(testCards());
+testCards();
 //api.getCards().then((res) => console.log(res));
 /*api
   .fetchUserInfo()
@@ -122,7 +140,6 @@ api
   .fetchUserInfo()
   .then((res) => res.json())
   .then((userData) => {
-    console.log(userData);
     user.setUserInfo({
       "name-input": userData.name,
       "description-input": userData.about,

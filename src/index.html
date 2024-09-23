@@ -21,7 +21,7 @@
       </header>
       <main class="content">
         <section class="profile page__section">
-          <div class="profile__avatar_wapper">
+          <div class="profile__avatar_wrapper">
             <img
               class="profile__avatar"
               src="<%=require('./images/jacques-cousteau.jpg')%>"
@@ -117,6 +117,19 @@
             ></button>
             <img class="image-popup__image" src="" alt="" />
             <h3 class="image-popup__text"></h3>
+          </div>
+        </section>
+        <section class="popup confirm-delete-popup">
+          <div class="popup__container">
+            <form class="form delete-form popup__form" id="confirm_delete_form">
+              <fieldset class="form__fieldset">
+                <legend class="form__title">Are you sure?</legend>
+              </fieldset>
+              <button type="submit" class="form__button popup__button">
+                Yes
+              </button>
+            </form>
+            <button type="button" class="popup__close-button"></button>
           </div>
         </section>
       </main>

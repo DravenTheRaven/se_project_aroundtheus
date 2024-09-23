@@ -7,21 +7,30 @@
   padding-top: 40px;
 }
 
-.proifle__avatar_wrapper {
+.profile__avatar_wrapper {
   position: relative;
+  margin-right: 24px;
 }
 
 .profile__avatar {
   border-radius: 50%;
   height: 120px;
   width: 120px;
-  margin-right: 24px;
 }
 
 .profile__edit-icon {
   position: absolute;
-  top: 25px;
-  left: 25px;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  padding: 42%;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.8);
+  opacity: 0;
+}
+
+.profile__edit-icon:hover {
+  opacity: 1;
 }
 
 .profile__info {
