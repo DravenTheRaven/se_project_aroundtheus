@@ -80,12 +80,9 @@ function changeProfileInfo(event, data) {
 
 function addLocationCard(event, data) {
   const newLocation = { name: data["title"], link: data["image-url"] };
-  api
-    .postCard(newLocation)
-    .then((res) => res.json())
-    .then((data) => {
-      cardSection.renderer(data);
-    });
+  api.postCard(newLocation).then((data) => {
+    cardSection.renderer(data);
+  });
   event.target.reset();
   addFormValidator.disableSubmitButton();
   addPopup.close();
@@ -147,7 +144,7 @@ getInitialCards();
 
 api
   .fetchUserInfo()
-  .then((res) => res.json())
+
   .then((userData) => {
     console.log(userData);
     profilePicture.src = userData.avatar;

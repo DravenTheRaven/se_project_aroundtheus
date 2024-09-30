@@ -8,21 +8,19 @@ export class Api {
   }
 
   getCards() {
-    return fetch(`${this.baseUrl}/cards`, {
+    return this._request(`${this.baseUrl}/cards`, {
       headers: this.headers,
-    })
-      .then((res) => res.json())
-      .then((data) => data);
+    });
   }
 
   fetchUserInfo() {
-    return fetch(`${this.baseUrl}/users/me`, {
+    return this._request(`${this.baseUrl}/users/me`, {
       headers: this.headers,
     });
   }
 
   postUserInfo(userInfo) {
-    return fetch(`${this.baseUrl}/users/me`, {
+    return this._request(`${this.baseUrl}/users/me`, {
       method: "PATCH",
       headers: this.headers,
       body: JSON.stringify({
@@ -33,7 +31,7 @@ export class Api {
   }
 
   postCard(locationInfo) {
-    return fetch(`${this.baseUrl}/cards`, {
+    return this._request(`${this.baseUrl}/cards`, {
       method: "POST",
       headers: this.headers,
       body: JSON.stringify({
@@ -44,7 +42,7 @@ export class Api {
   }
 
   deleteCard(locationCardId) {
-    return fetch(`${this.baseUrl}/cards/${locationCardId}`, {
+    return this._request(`${this.baseUrl}/cards/${locationCardId}`, {
       method: "DELETE",
       headers: this.headers,
     });
@@ -52,12 +50,12 @@ export class Api {
 
   handleLike(locationCardId, isLiked) {
     if (!isLiked) {
-      return fetch(`${this.baseUrl}/cards/${locationCardId}/likes`, {
+      return this._request(`${this.baseUrl}/cards/${locationCardId}/likes`, {
         method: "PUT",
         headers: this.headers,
       });
     } else {
-      return fetch(`${this.baseUrl}/cards/${locationCardId}/likes`, {
+      return this._request(`${this.baseUrl}/cards/${locationCardId}/likes`, {
         method: "DELETE",
         headers: this.headers,
       });
@@ -65,12 +63,29 @@ export class Api {
   }
 
   changeProfilePicture(pictureLink) {
-    return fetch(`${this.baseUrl}/users/me/avatar`, {
+    return this._request(`${this.baseUrl}/users/me/avatar`, {
       method: "PATCH",
       headers: this.headers,
       body: JSON.stringify({
         avatar: `${pictureLink["image-url"]}`,
       }),
     });
+  }
+
+  _checkResponse(res) {
+    console.log(res.ok);
+    if (res.ok) {
+      return res.json();
+    }
+    return Promise.reject(`Error ${res.status}`);
+  }
+
+  _request(url, options) {
+    return fetch(`${url}`, options)
+      .then(this._checkResponse)
+      .then((data) => {
+        console.log(data);
+        return data;
+      });
   }
 }
