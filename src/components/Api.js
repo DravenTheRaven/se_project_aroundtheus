@@ -3,12 +3,16 @@ export class Api {
     this.options = options;
     this.baseUrl = options.baseUrl;
     this.headers = options.headers;
+    this.handleLike = this.handleLike.bind(this);
+    this.changeProfilePicture = this.changeProfilePicture.bind(this);
   }
 
   getCards() {
     return fetch(`${this.baseUrl}/cards`, {
       headers: this.headers,
-    });
+    })
+      .then((res) => res.json())
+      .then((data) => data);
   }
 
   fetchUserInfo() {
@@ -18,7 +22,7 @@ export class Api {
   }
 
   postUserInfo(userInfo) {
-    return fetch("https://around-api.en.tripleten-services.com/v1/users/me", {
+    return fetch(`${this.baseUrl}/users/me`, {
       method: "PATCH",
       headers: this.headers,
       body: JSON.stringify({
@@ -29,7 +33,7 @@ export class Api {
   }
 
   postCard(locationInfo) {
-    return fetch("https://around-api.en.tripleten-services.com/v1/cards", {
+    return fetch(`${this.baseUrl}/cards`, {
       method: "POST",
       headers: this.headers,
       body: JSON.stringify({
@@ -40,56 +44,33 @@ export class Api {
   }
 
   deleteCard(locationCardId) {
-    return fetch(
-      "https://around-api.en.tripleten-services.com/v1/cards/" + locationCardId,
-      {
-        method: "DELETE",
-        headers: {
-          authorization: "c6945e47-b548-4e1c-b20e-926f9841fa5f",
-        },
-      }
-    );
+    return fetch(`${this.baseUrl}/cards/${locationCardId}`, {
+      method: "DELETE",
+      headers: this.headers,
+    });
   }
 
   handleLike(locationCardId, isLiked) {
     if (!isLiked) {
-      return fetch(
-        "https://around-api.en.tripleten-services.com/v1/cards/" +
-          locationCardId +
-          "/likes",
-        {
-          method: "PUT",
-          headers: {
-            authorization: "c6945e47-b548-4e1c-b20e-926f9841fa5f",
-          },
-        }
-      );
+      return fetch(`${this.baseUrl}/cards/${locationCardId}/likes`, {
+        method: "PUT",
+        headers: this.headers,
+      });
     } else {
-      return fetch(
-        "https://around-api.en.tripleten-services.com/v1/cards/" +
-          locationCardId +
-          "/likes",
-        {
-          method: "DELETE",
-          headers: {
-            authorization: "c6945e47-b548-4e1c-b20e-926f9841fa5f",
-          },
-        }
-      );
+      return fetch(`${this.baseUrl}/cards/${locationCardId}/likes`, {
+        method: "DELETE",
+        headers: this.headers,
+      });
     }
   }
 
   changeProfilePicture(pictureLink) {
-    console.log(pictureLink["image-url"]);
-    return fetch(
-      "https://around-api.en.tripleten-services.com/v1/users/me/avatar",
-      {
-        method: "PATCH",
-        headers: this.headers,
-        body: JSON.stringify({
-          avatar: `${pictureLink["image-url"]}`,
-        }),
-      }
-    );
+    return fetch(`${this.baseUrl}/users/me/avatar`, {
+      method: "PATCH",
+      headers: this.headers,
+      body: JSON.stringify({
+        avatar: `${pictureLink["image-url"]}`,
+      }),
+    });
   }
 }

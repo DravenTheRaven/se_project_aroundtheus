@@ -20,6 +20,7 @@ import {
   newProfileFormName,
   newProfileFormDescription,
   profilePicture,
+  profilePictureForm,
 } from "../utils/utils.js";
 import "./index.css";
 
@@ -39,6 +40,10 @@ const profilePicturePopup = new PopupWithForm(
 );
 const editFormValidator = new FormValidator(options, editForm);
 const addFormValidator = new FormValidator(options, addForm);
+const profileImageFormValidator = new FormValidator(
+  options,
+  profilePictureForm
+);
 
 const imagePopup = new PopupWithImage(".image-popup");
 const cardSection = new Section({
@@ -126,22 +131,19 @@ profilePictureWrapper.addEventListener("click", openEditProfilePicture);
 
 editFormValidator.enableValidation();
 addFormValidator.enableValidation();
+profileImageFormValidator.enableValidation();
 imagePopup.setEventListeners();
 addPopup.setEventListeners();
 editPopup.setEventListeners();
 profilePicturePopup.setEventListeners();
 
-const testCards = async () => {
-  const cards = await api
-    .getCards()
-    .then((res) => res.json())
-    .then((data) => data);
-
+const getInitialCards = async () => {
+  const cards = await api.getCards();
   cards.forEach((card) => {
     cardSection.renderer(card);
   });
 };
-testCards();
+getInitialCards();
 
 api
   .fetchUserInfo()
