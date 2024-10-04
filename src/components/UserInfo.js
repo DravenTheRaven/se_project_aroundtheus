@@ -1,13 +1,16 @@
 export class UserInfo {
-  constructor(profileFormName, profileFormDescription) {
+  constructor(profileFormName, profileFormDescription, profilePicture) {
     this._profileFormName = profileFormName;
     this._profileFormDescription = profileFormDescription;
+    this._profilePicture = profilePicture;
   }
 
   getUserInfo() {
+    console.log(this._profilePicture.src);
     return {
       "name-input": `${this._profileFormName.textContent}`,
       "description-input": `${this._profileFormDescription.textContent}`,
+      "profile-picture": `${this._profilePicture.src}`,
     };
   }
 

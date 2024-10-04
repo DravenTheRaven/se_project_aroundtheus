@@ -73,7 +73,7 @@ export class Api {
   }
 
   _checkResponse(res) {
-    console.log(res.ok);
+    console.log(res);
     if (res.ok) {
       return res.json();
     }
@@ -86,6 +86,7 @@ export class Api {
       .then((data) => {
         console.log(data);
         return data;
-      });
+      })
+      .catch((err) => console.log(err));
   }
 }

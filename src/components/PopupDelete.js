@@ -14,8 +14,6 @@ export class PopupDelete extends Popup {
   _handleSubmit(event) {
     event.preventDefault();
     this.handleDelete(this.cardId, this.cardElement);
-    this.close();
-    this._popupForm.removeEventListener("submit", this._handleSubmit);
   }
 
   setEventListeners() {

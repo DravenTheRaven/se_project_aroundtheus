@@ -52,7 +52,8 @@ export class Card {
       .addEventListener("click", () => {
         this.handleLike(this.id, this.isLiked)
           .then(this._likeCard())
-          .then((this.isLiked = !this.isLiked));
+          .then((this.isLiked = !this.isLiked))
+          .catch((err) => console.log(err));
       });
     this._templateClone
       .querySelector(".card__delete-button")

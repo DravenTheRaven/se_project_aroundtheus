@@ -38,6 +38,13 @@ const profilePicturePopup = new PopupWithForm(
   ".profile-picture-popup",
   changeProfilePicture
 );
+const deletePopup = new PopupDelete(
+  ".confirm-delete-popup",
+  "",
+  "",
+  deleteLocationCard
+);
+
 const editFormValidator = new FormValidator(options, editForm);
 const addFormValidator = new FormValidator(options, addForm);
 const profileImageFormValidator = new FormValidator(
@@ -60,7 +67,11 @@ const cardSection = new Section({
   },
   selector: ".cards",
 });
-const user = new UserInfo(profileFormName, profileFormDescription);
+const user = new UserInfo(
+  profileFormName,
+  profileFormDescription,
+  profilePicture
+);
 
 function openProfilePopup() {
   const userInfo = user.getUserInfo();
@@ -73,19 +84,23 @@ function openProfilePopup() {
 
 function changeProfileInfo(event, data) {
   user.setUserInfo(data);
-  api.postUserInfo(data);
-  api.fetchUserInfo();
-  editPopup.close();
+  api
+    .postUserInfo(data)
+    .then(editPopup.close())
+    .catch((err) => console.log(error));
 }
 
 function addLocationCard(event, data) {
   const newLocation = { name: data["title"], link: data["image-url"] };
-  api.postCard(newLocation).then((data) => {
-    cardSection.renderer(data);
-  });
-  event.target.reset();
-  addFormValidator.disableSubmitButton();
-  addPopup.close();
+  api
+    .postCard(newLocation)
+    .then((data) => {
+      cardSection.renderer(data);
+      event.target.reset();
+      addFormValidator.disableSubmitButton();
+      addPopup.close();
+    })
+    .catch((err) => console.log(err));
 }
 
 function openImageModel(event) {
@@ -97,25 +112,33 @@ function openEditProfilePicture() {
 }
 
 function openConfirmDelete(locationCardId, locationCard) {
-  const deletePopup = new PopupDelete(
-    ".confirm-delete-popup",
-    locationCardId,
-    locationCard,
-    deleteLocationCard
-  );
-  deletePopup.setEventListeners();
+  deletePopup.cardId = locationCardId;
+  deletePopup.cardElement = locationCard;
   deletePopup.open();
 }
 
 function deleteLocationCard(locationCardId, locationCard) {
-  api.deleteCard(locationCardId).then(locationCard.remove());
+  api
+    .deleteCard(locationCardId)
+    .then(() => {
+      locationCard.remove();
+      deletePopup.cardId = "";
+      deletePopup.cardElement = "";
+      deletePopup.close();
+    })
+    .catch((err) => console.log(err));
 }
 
 function changeProfilePicture(event, pictureLink) {
   profilePicture.src = pictureLink["image-url"];
-  console.log(profilePicture.src);
-  api.changeProfilePicture(pictureLink).then(api.fetchUserInfo());
-  profilePicturePopup.close();
+  api
+    .changeProfilePicture(pictureLink)
+    .then(() => {
+      toggleButtonText(profilePicturePopup.submitButton);
+      profilePicturePopup.close();
+    })
+    .catch((err) => console.log(err))
+    .finally(profilePicturePopup.resetSubmitText);
 }
 
 editButton.addEventListener("click", openProfilePopup);
@@ -123,6 +146,11 @@ editButton.addEventListener("click", openProfilePopup);
 addButton.addEventListener("click", () => {
   addPopup.open();
 });
+
+function toggleButtonText(buttonElement, buttonsStatusText = "Saving...") {
+  const originalText = buttonElement.textContent;
+  buttonElement.textContent = buttonsStatusText;
+}
 
 profilePictureWrapper.addEventListener("click", openEditProfilePicture);
 
@@ -133,18 +161,22 @@ imagePopup.setEventListeners();
 addPopup.setEventListeners();
 editPopup.setEventListeners();
 profilePicturePopup.setEventListeners();
+deletePopup.setEventListeners();
 
 const getInitialCards = async () => {
-  const cards = await api.getCards();
-  cards.forEach((card) => {
-    cardSection.renderer(card);
-  });
+  try {
+    const cards = await api.getCards();
+    cards.forEach((card) => {
+      cardSection.renderer(card);
+    });
+  } catch (error) {
+    console.log(error);
+  }
 };
 getInitialCards();
 
 api
   .fetchUserInfo()
-
   .then((userData) => {
     console.log(userData);
     profilePicture.src = userData.avatar;
@@ -152,4 +184,5 @@ api
       "name-input": userData.name,
       "description-input": userData.about,
     });
-  });
+  })
+  .catch((err) => console.log(err));
