@@ -86,8 +86,12 @@ function changeProfileInfo(event, data) {
   user.setUserInfo(data);
   api
     .postUserInfo(data)
-    .then(editPopup.close())
-    .catch((err) => console.log(error));
+    .then(() => {
+      editPopup.close();
+      toggleButtonText(editPopup.submitButton);
+    })
+    .catch((err) => console.log(err))
+    .finally(editPopup.resetSubmitText);
 }
 
 function addLocationCard(event, data) {
@@ -98,9 +102,13 @@ function addLocationCard(event, data) {
       cardSection.renderer(data);
       event.target.reset();
       addFormValidator.disableSubmitButton();
+      toggleButtonText(addPopup.submitButton);
       addPopup.close();
     })
-    .catch((err) => console.log(err));
+    .catch((err) => console.log(err))
+    .finally(() => {
+      addPopup.resetSubmitText();
+    });
 }
 
 function openImageModel(event) {
@@ -130,7 +138,8 @@ function deleteLocationCard(locationCardId, locationCard) {
 }
 
 function changeProfilePicture(event, pictureLink) {
-  profilePicture.src = pictureLink["image-url"];
+  user.setProfilePicture(pictureLink);
+  profilePicture.src = user.profilePicture.src;
   api
     .changeProfilePicture(pictureLink)
     .then(() => {
@@ -178,7 +187,6 @@ getInitialCards();
 api
   .fetchUserInfo()
   .then((userData) => {
-    console.log(userData);
     profilePicture.src = userData.avatar;
     user.setUserInfo({
       "name-input": userData.name,

@@ -73,7 +73,6 @@ export class Api {
   }
 
   _checkResponse(res) {
-    console.log(res);
     if (res.ok) {
       return res.json();
     }
@@ -84,7 +83,6 @@ export class Api {
     return fetch(`${url}`, options)
       .then(this._checkResponse)
       .then((data) => {
-        console.log(data);
         return data;
       })
       .catch((err) => console.log(err));
