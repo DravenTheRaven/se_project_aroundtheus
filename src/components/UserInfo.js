@@ -18,13 +18,11 @@ export class UserInfo {
     this._profileFormName.textContent = data["name-input"];
     this._profileFormDescription.textContent = data["description-input"];
     if (data["profile-picture"]) {
-      this.profilePicture.src = data["profile-picture"];
+      this.setProfilePicture({ "image-url": data["profile-picture"] });
     }
   }
 
   setProfilePicture(imageLink) {
-    console.log(this.profilePicture);
     this.profilePicture.src = imageLink["image-url"];
-    console.log(this.profilePicture.src);
   }
 }
