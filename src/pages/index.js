@@ -75,26 +75,28 @@ const user = new UserInfo(
 
 function openProfilePopup() {
   const userInfo = user.getUserInfo();
+  console.log(userInfo);
   newProfileFormName.value = userInfo["name-input"];
   newProfileFormDescription.value = userInfo["description-input"];
-  user.setUserInfo(userInfo);
   editFormValidator.resetValidation();
   editPopup.open();
 }
 
 function changeProfileInfo(event, data) {
   user.setUserInfo(data);
+  console.log(data);
+  toggleButtonText(editPopup.submitButton);
   api
     .postUserInfo(data)
     .then(() => {
       editPopup.close();
-      toggleButtonText(editPopup.submitButton);
     })
     .catch((err) => console.log(err))
     .finally(editPopup.resetSubmitText);
 }
 
 function addLocationCard(event, data) {
+  toggleButtonText(addPopup.submitButton);
   const newLocation = { name: data["title"], link: data["image-url"] };
   api
     .postCard(newLocation)
@@ -102,7 +104,6 @@ function addLocationCard(event, data) {
       cardSection.renderer(data);
       event.target.reset();
       addFormValidator.disableSubmitButton();
-      toggleButtonText(addPopup.submitButton);
       addPopup.close();
     })
     .catch((err) => console.log(err))
@@ -138,13 +139,12 @@ function deleteLocationCard(locationCardId, locationCard) {
 }
 
 function changeProfilePicture(event, pictureLink) {
-  user.setProfilePicture(pictureLink);
-  profilePicture.src = user.profilePicture.src;
+  toggleButtonText(profilePicturePopup.submitButton);
   api
     .changeProfilePicture(pictureLink)
     .then(() => {
-      toggleButtonText(profilePicturePopup.submitButton);
       profilePicturePopup.close();
+      user.setProfilePicture(pictureLink);
     })
     .catch((err) => console.log(err))
     .finally(profilePicturePopup.resetSubmitText);
@@ -175,9 +175,7 @@ deletePopup.setEventListeners();
 const getInitialCards = async () => {
   try {
     const cards = await api.getCards();
-    cards.forEach((card) => {
-      cardSection.renderer(card);
-    });
+    cardSection.renderItems(cards);
   } catch (error) {
     console.log(error);
   }
@@ -187,10 +185,10 @@ getInitialCards();
 api
   .fetchUserInfo()
   .then((userData) => {
-    profilePicture.src = userData.avatar;
     user.setUserInfo({
       "name-input": userData.name,
       "description-input": userData.about,
+      "profile-picture": userData.avatar,
     });
   })
   .catch((err) => console.log(err));

@@ -6,6 +6,7 @@ export class UserInfo {
   }
 
   getUserInfo() {
+    console.log(this.profilePicture);
     return {
       "name-input": `${this._profileFormName.textContent}`,
       "description-input": `${this._profileFormDescription.textContent}`,
@@ -16,6 +17,9 @@ export class UserInfo {
   setUserInfo(data) {
     this._profileFormName.textContent = data["name-input"];
     this._profileFormDescription.textContent = data["description-input"];
+    if (data["profile-picture"]) {
+      this.profilePicture.src = data["profile-picture"];
+    }
   }
 
   setProfilePicture(imageLink) {

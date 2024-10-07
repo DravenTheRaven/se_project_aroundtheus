@@ -84,7 +84,6 @@ export class Api {
       .then(this._checkResponse)
       .then((data) => {
         return data;
-      })
-      .catch((err) => console.log(err));
+      });
   }
 }

@@ -51,8 +51,10 @@ export class Card {
       .querySelector(".card__button")
       .addEventListener("click", () => {
         this.handleLike(this.id, this.isLiked)
-          .then(this._likeCard())
-          .then((this.isLiked = !this.isLiked))
+          .then(() => {
+            this._likeCard();
+            this.isLiked = !this.isLiked;
+          })
           .catch((err) => console.log(err));
       });
     this._templateClone
