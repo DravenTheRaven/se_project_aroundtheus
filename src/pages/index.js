@@ -75,7 +75,6 @@ const user = new UserInfo(
 
 function openProfilePopup() {
   const userInfo = user.getUserInfo();
-  console.log(userInfo);
   newProfileFormName.value = userInfo["name-input"];
   newProfileFormDescription.value = userInfo["description-input"];
   editFormValidator.resetValidation();
