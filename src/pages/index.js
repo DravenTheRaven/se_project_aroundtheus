@@ -83,12 +83,11 @@ function openProfilePopup() {
 }
 
 function changeProfileInfo(event, data) {
-  user.setUserInfo(data);
-  console.log(data);
   toggleButtonText(editPopup.submitButton);
   api
     .postUserInfo(data)
     .then(() => {
+      user.setUserInfo(data);
       editPopup.close();
     })
     .catch((err) => console.log(err))
