@@ -43,6 +43,12 @@ export const profileFormDescription =
   document.querySelector(".profile__subtitle");
 export const editForm = document.forms["edit_profile_form"];
 export const addForm = document.forms["new_place_form"];
+export const profilePictureForm = document.forms["new_profile_picture_form"];
+export const confirmDeleteForm = document.forms["confirm_delete_form"];
 export const newProfileFormName = document.querySelector(".form__name");
 export const newProfileFormDescription =
   document.querySelector(".form__description");
+export const profilePicture = document.querySelector(".profile__avatar");
+export const profilePictureWrapper = document.querySelector(
+  ".profile__avatar_wrapper"
+);

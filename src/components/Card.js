@@ -1,11 +1,33 @@
 export class Card {
-  constructor(data, cardSelector, handleImageClick) {
+  constructor(
+    data,
+    cardSelector,
+    handleImageClick,
+    handleDelete,
+    handleLike,
+    openDeletePopup
+  ) {
     this._name = data.name;
     this._link = data.link;
+    this.id = data._id;
+    this.isLiked = data.isLiked;
     this._template = cardSelector;
     this._handleImageClick = handleImageClick;
     this._templateClone = this._template.content.cloneNode(true);
     this._cardImage = this._templateClone.querySelector(".card__image");
+    this._likeButton = this._templateClone.querySelector(".card__button");
+    this.handleDelete = handleDelete;
+    this.handleLike = handleLike;
+    this.openDeletePopup = openDeletePopup;
+    this._checkInitialLike();
+  }
+
+  _checkInitialLike() {
+    if (this.isLiked) {
+      this._likeButton.classList.add("card__button-clicked");
+    } else {
+      this._likeButton.classList.remove("card__button-clicked");
+    }
   }
 
   getCard() {
@@ -20,17 +42,27 @@ export class Card {
     event.target.closest(".card").remove();
   }
 
-  _likeCard(event) {
-    event.target.classList.toggle("card__button-clicked");
+  _likeCard() {
+    this._likeButton.classList.toggle("card__button-clicked");
   }
 
   _setEventListeners() {
     this._templateClone
       .querySelector(".card__button")
-      .addEventListener("click", this._likeCard);
+      .addEventListener("click", () => {
+        this.handleLike(this.id, this.isLiked)
+          .then(() => {
+            this._likeCard();
+            this.isLiked = !this.isLiked;
+          })
+          .catch((err) => console.log(err));
+      });
     this._templateClone
       .querySelector(".card__delete-button")
-      .addEventListener("click", this._deleteCard);
+      .addEventListener("click", (event) => {
+        const cardElement = event.target.closest(".card");
+        this.openDeletePopup(this.id, cardElement);
+      });
     this._cardImage.addEventListener("click", this._handleImageClick);
   }
 }

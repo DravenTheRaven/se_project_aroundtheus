@@ -24,6 +24,14 @@
   border-radius: 10px;
 }
 
+.popup_delete {
+  height: 220px;
+}
+
+.popup_change_profile_picture {
+  height: 272px;
+}
+
 .popup__close-button {
   height: 45px;
   width: 45px;
