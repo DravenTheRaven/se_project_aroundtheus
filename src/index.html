@@ -21,15 +21,18 @@
       </header>
       <main class="content">
         <section class="profile page__section">
-          <img
-            class="profile__avatar"
-            src="<%=require('./images/jacques-cousteau.jpg')%>"
-            alt="Avatar"
-          />
+          <div class="profile__avatar_wrapper">
+            <img class="profile__avatar" src="" alt="Avatar" />
+            <img
+              class="profile__edit-icon"
+              src="<%=require('./images/edit-icon.svg')%>"
+              alt="Edit Icon"
+            />
+          </div>
           <div class="profile__info">
-            <h1 class="profile__title">Jacques Cousteau</h1>
+            <h1 class="profile__title"></h1>
             <button type="button" class="profile__edit-button"></button>
-            <p class="profile__subtitle">Explorer</p>
+            <p class="profile__subtitle"></p>
           </div>
           <button type="button" class="profile__button"></button>
         </section>
@@ -110,6 +113,43 @@
             ></button>
             <img class="image-popup__image" src="" alt="" />
             <h3 class="image-popup__text"></h3>
+          </div>
+        </section>
+        <section class="popup confirm-delete-popup">
+          <div class="popup__container popup_delete">
+            <form class="form delete-form popup__form" id="confirm_delete_form">
+              <fieldset class="form__fieldset">
+                <legend class="form__title">Are you sure?</legend>
+              </fieldset>
+              <button type="submit" class="form__button popup__button">
+                Yes
+              </button>
+            </form>
+            <button type="button" class="popup__close-button"></button>
+          </div>
+        </section>
+        <section class="popup profile-picture-popup">
+          <div class="popup__container popup_change_profile_picture">
+            <form
+              class="form profile-picture-form popup__form"
+              id="new_profile_picture_form"
+            >
+              <fieldset class="form__fieldset">
+                <legend class="form__title">Change profile picture</legend>
+                <input
+                  placeholder="Image URL"
+                  class="form__input form__image-url popup__input"
+                  id="image-url"
+                  type="url"
+                  required
+                />
+                <span class="popup__error_visible form__image-url-error"></span>
+              </fieldset>
+              <button type="submit" class="form__button popup__button">
+                Save
+              </button>
+            </form>
+            <button type="button" class="popup__close-button"></button>
           </div>
         </section>
       </main>
